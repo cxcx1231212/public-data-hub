@@ -1,0 +1,34 @@
+{
+  "$schema": "/Users/cx/Documents/Codex/2026-08-14/referenced-chatgpt-conversation-this-is-an/123-liuhe-site/node_modules/wrangler/config-schema.json",
+  "name": "mahuiziliao",
+  "main": "worker.js",
+  "compatibility_date": "2026-08-17",
+  "triggers": {
+    "crons": ["40 13 * * *", "45 13 * * *"]
+  },
+  "assets": {
+    "directory": "./outputs",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none"
+  },
+  "services": [
+    {
+      "binding": "CENTRAL_LINKS",
+      "service": "123-liuhe-site",
+      "environment": "production"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mahuiziliao-db",
+      "database_id": "4c6c2ffe-1e14-4519-82e9-a09cbf693e74"
+    },
+    {
+      "binding": "CHAT_DB",
+      "database_name": "xinshui-chat-db",
+      "database_id": "f8d0ac4d-96f9-4ffe-b915-899a73e8a8be"
+    }
+  ]
+}

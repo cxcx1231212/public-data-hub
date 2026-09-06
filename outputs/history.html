@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>历史开奖记录</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080808;color:#f4f1e8;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial,sans-serif}.page{width:min(100%,760px);margin:auto;min-height:100vh;background:#101010}.topbar{height:58px;padding:0 15px;display:grid;grid-template-columns:60px 1fr 60px;align-items:center;background:#070707;border-bottom:1px solid #29241a;position:sticky;top:0;z-index:5}.back{color:#f1c85a;text-decoration:none;font-size:17px}.inner-title{text-align:center;font-size:19px;color:#fff}.lottery-tabs{display:flex;gap:7px;padding:11px 10px 3px}.lottery-tab{flex:1;min-height:38px;border:1px solid #443a25;border-radius:7px;background:#17140e;color:#a99b78;font:800 13px inherit;cursor:pointer}.lottery-tab.active{border-color:#c79a31;background:linear-gradient(180deg,#e2bd58,#9e701a);color:#171006}.history-years{display:flex;gap:8px;overflow-x:auto;padding:8px 10px 5px;scrollbar-width:none}.history-year{flex:0 0 72px;height:36px;border:1px solid #45402f;border-radius:7px;background:#151515;color:#aaa;font:700 14px inherit;cursor:pointer}.history-year.active{border-color:#b28c25;background:linear-gradient(180deg,#34290c,#201907);color:#f5c84b}.history-sync{display:flex;align-items:center;justify-content:center;gap:8px;min-height:30px;margin:0 10px 7px;color:#766f64;font-size:10px}.history-sync button{padding:3px 9px;border:1px solid #5a4825;border-radius:99px;background:#17130b;color:#d7b85d;font:800 10px inherit;cursor:pointer}.inner-list{padding:2px 10px 10px}.history-record{padding:11px 10px;margin-bottom:8px;border:1px solid #303030;background:#151515;border-radius:6px;display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;gap:6px}.period{display:block;color:#f1cc61;font-size:14px;font-weight:700;white-space:nowrap}.history-numbers{display:grid;grid-template-columns:repeat(6,28px) 14px 28px;align-items:start;justify-content:end;column-gap:3px}.history-ball{width:28px;text-align:center}.mini-ball{width:28px;height:28px;margin:auto;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800;background:#c13a35}.mini-ball.blue{background:#3982c5}.mini-ball.green{background:#399a58}.zodiac{display:block;color:#eee;font-size:12px;line-height:14px;margin-top:4px}.plus{width:14px;text-align:center;color:#f1cc61;font-size:18px;font-weight:900;line-height:28px}.pager{display:flex;align-items:center;justify-content:center;gap:14px;padding:4px 10px 22px}.pager button{min-width:78px;height:36px;border:1px solid #59491f;border-radius:7px;background:#17140e;color:#e7c65d;font:700 14px inherit;cursor:pointer}.pager button:disabled{opacity:.35}.page-number{color:#aaa;font-size:13px;min-width:74px;text-align:center}@media(max-width:390px){.lottery-tab{font-size:11px}.history-record{padding:9px 5px;grid-template-columns:64px minmax(0,1fr);gap:3px}.period{font-size:12px}.history-numbers{grid-template-columns:repeat(6,24px) 12px 24px;column-gap:2px}.history-ball{width:24px}.mini-ball{width:24px;height:24px;font-size:11px}.zodiac{font-size:11px}.plus{width:12px;font-size:15px;line-height:24px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar"><a class="back" href="index.html">返回</a><strong class="inner-title" id="historyTitle">澳门历史开奖记录</strong><span></span></header>
+    <nav class="lottery-tabs" aria-label="选择彩种"><button class="lottery-tab active" data-lottery="澳门">澳门</button><button class="lottery-tab" data-lottery="香港">香港</button><button class="lottery-tab" data-lottery="疯狂天天彩">疯狂天天彩</button></nav>
+    <nav class="history-years" aria-label="选择年份">
+      <button class="history-year active" data-year="2026">2026年</button><button class="history-year" data-year="2025">2025年</button><button class="history-year" data-year="2024">2024年</button><button class="history-year" data-year="2023">2023年</button><button class="history-year" data-year="2022">2022年</button>
+    </nav>
+    <div class="history-sync"><span id="historySync">正在同步最新一期…</span><button id="refreshHistory" type="button">刷新</button></div>
+    <div class="inner-list" id="historyList"></div>
+    <div class="pager"><button id="prev">上一页</button><span class="page-number" id="pageNumber">第 1 / 2 页</span><button id="next">下一页</button></div>
+  </main>
+  <script>
+    const lotteryTypes={'澳门':'xam','香港':'xg','疯狂天天彩':'fktt'};let page=1,pages=1,lottery='澳门',year=2026,rows=[];
+    const color=value=>Number(value)===2?'blue':Number(value)===3?'green':'';
+    function render(){document.querySelector('#historyTitle').textContent=`${lottery}历史开奖记录`;document.querySelector('#historyList').innerHTML=rows.length?rows.map(row=>{const list=(row.numberList||[]).slice(0,7),balls=list.map((item,index)=>`${index===6?'<span class="plus">+</span>':''}<span class="history-ball"><span class="mini-ball ${color(item.color)}">${String(item.number).padStart(2,'0')}</span><span class="zodiac">${item.shengXiao||''}</span></span>`).join('');return `<div class="history-record"><span class="period">第${row.issueNo}期</span><div class="history-numbers">${balls}</div></div>`}).join(''):'<div style="padding:50px 10px;text-align:center;color:#777">这一页暂时没有开奖记录</div>';document.querySelector('#pageNumber').textContent=`第 ${page} / ${pages} 页`;document.querySelector('#prev').disabled=page===1;document.querySelector('#next').disabled=page>=pages}
+    async function loadHistory(){const status=document.querySelector('#historySync');status.textContent='正在同步完整历史记录…';try{const response=await fetch(`history-data.php?type=${lotteryTypes[lottery]}&page=${page}&year=${year}&t=${Date.now()}`,{cache:'no-store'}),payload=await response.json();if(payload.status!==0||!Array.isArray(payload.data?.list))throw new Error(payload.info||'读取失败');rows=payload.data.list;pages=Math.max(1,Number(payload.data.pages)||1);status.textContent=`真实接口 · 共 ${payload.data.count||rows.length} 期 · ${new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})} 更新`;render()}catch(error){rows=[];pages=1;status.textContent=error.message||'历史记录暂时无法连接';render()}}
+    document.querySelectorAll('.lottery-tab').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.lottery-tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');lottery=btn.dataset.lottery;page=1;loadHistory()});
+    document.querySelectorAll('.history-year').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.history-year').forEach(x=>x.classList.remove('active'));btn.classList.add('active');year=Number(btn.dataset.year);page=1;loadHistory()});
+    document.querySelector('#refreshHistory').onclick=loadHistory;
+    document.querySelector('#prev').onclick=()=>{if(page>1){page--;loadHistory();scrollTo(0,0)}};
+    document.querySelector('#next').onclick=()=>{if(page<pages){page++;loadHistory();scrollTo(0,0)}};loadHistory();
+  </script>
+  <script src="site-stats.js"></script>
+  <script src="cnzz-stats.js"></script>
+</body>
+</html>

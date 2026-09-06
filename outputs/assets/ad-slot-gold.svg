@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="110" viewBox="0 0 750 110">
+  <defs><linearGradient id="g" x2="1"><stop stop-color="#090909"/><stop offset=".5" stop-color="#33210b"/><stop offset="1" stop-color="#090909"/></linearGradient></defs>
+  <rect width="750" height="110" rx="10" fill="url(#g)"/><rect x="2" y="2" width="746" height="106" rx="9" fill="none" stroke="#d8a73d" stroke-width="2"/>
+  <text x="375" y="50" text-anchor="middle" fill="#f2ce76" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="26" font-weight="700">广告图片位置</text>
+  <text x="375" y="80" text-anchor="middle" fill="#aa8c53" font-family="Arial,sans-serif" font-size="16" letter-spacing="3">123MH.COM · 750 × 110</text>
+</svg>

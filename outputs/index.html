@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="金色主题开奖数据与资讯展示站" />
+  <title>马会资料-永久免费公开</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070707;
+      --panel: #16110f;
+      --panel-2: #0d0d10;
+      --gold: #f2c96c;
+      --gold-2: #9a5d1f;
+      --line: #3b2a1d;
+      --muted: #b49a74;
+      --red: #ed3f32;
+      --green: #26b16d;
+      --blue: #3084dc;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -8%, rgba(157, 102, 31, .18), transparent 30rem),
+        var(--bg);
+      color: #f7ead1;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    .page { width: min(100%, 760px); margin: auto; min-height: 100vh; }
+    .topbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(242, 201, 108, .12);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .dog-mark { width: 44px; height: 53px; display:block; object-fit:contain; filter:drop-shadow(0 2px 7px rgba(240,181,63,.24)); }
+    .brand-copy b { display: block; font-size: 18px; letter-spacing: 3px; color: var(--gold); }
+    .brand-copy small { color: #755d3d; letter-spacing: 2px; }
+    .domain { font-weight: 900; color: #806039; letter-spacing: 1px; }
+    .lottery-tabs { display: grid; gap: 6px; padding: 7px; }
+    .lottery-tabs { grid-template-columns: repeat(3, 1fr); }
+    .tab-btn, .tool-btn, .mini-btn {
+      appearance: none; border: 1px solid #292018; border-radius: 8px; color: #b99655;
+      background: linear-gradient(180deg, #17130f, #0d0c0b); cursor: pointer; transition: .2s ease;
+    }
+    .tab-btn { min-height: 48px; font-size: 16px; font-weight: 800; }
+    .tab-btn.active { color: #281a07; border-color: #b87a2d; background: linear-gradient(180deg, #f5cc78, #a96723); }
+    .tool-btn { min-height: 64px; font-weight: 800; line-height: 1.35; }
+    .tool-btn span { display: block; font-size: 20px; margin-bottom: 1px; }
+    .tab-btn:hover, .tool-btn:hover, .mini-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    .draw-card {
+      margin: 8px 7px 14px; overflow: hidden; border: 1px solid #3b2818; border-radius: 12px;
+      background: linear-gradient(155deg, rgba(70, 42, 21, .75), #0b0b0d 58%);
+      box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    }
+    .draw-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: linear-gradient(90deg, #9d6329, #372013); }
+    .draw-head strong { font-size: 18px; }
+    .draw-head em { font-style: normal; color: #ffd67f; font-weight: 800; }
+    .balls { display: flex; justify-content: center; align-items: flex-start; gap: 9px; padding: 22px 10px 19px; flex-wrap: wrap; }
+    .ball-wrap { text-align: center; min-width: 48px; }
+    .ball {
+      width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; margin: auto;
+      color: #181818; font-size: 17px; font-weight: 1000; background: radial-gradient(circle at 35% 27%, #fff, #e3e3df 60%, #888);
+      box-shadow: 0 0 0 3px currentColor, 0 6px 12px rgba(0,0,0,.45);
+    }
+    .ball.red { color: var(--red); } .ball.green { color: var(--green); } .ball.blue { color: var(--blue); }
+    .ball span { color: #171717; }
+    .zodiac { display: block; color: #d5aa62; font-size: 12px; margin-top: 8px; }
+    .plus { font-size: 25px; color: var(--gold); align-self: center; margin-top: 4px; }
+    .draw-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 10px 12px; }
+    .mini-btn { padding: 11px 6px; font-weight: 800; }
+    .draw-style5 {
+      display: grid;
+      grid-template-columns: 22% minmax(0, 60%) 18%;
+      min-height: 148px;
+      margin: 8px 7px 14px;
+      overflow: hidden;
+      border: 1px solid #80661b;
+      border-radius: 9px;
+      background: linear-gradient(180deg, #111315, #090a0b);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.015), 0 12px 32px rgba(0,0,0,.35);
+    }
+    .draw-style5-left, .draw-style5-center, .draw-style5-right { min-width: 0; }
+    .draw-style5-left {
+      padding: 15px 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      border-right: 1px solid #80661b;
+    }
+    .s5-period { font-size: 16px; font-weight: 900; white-space: nowrap; color: #f5f5f5; }
+    .s5-label { margin-top: 12px; color: #d6d6d6; font-size: 14px; }
+    .s5-countdown { margin-top: 3px; color: #ffd23f; font-size: 21px; font-weight: 900; letter-spacing: .4px; }
+    .draw-style5-center { padding: 11px 5px 9px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .s5-title { width: 100%; text-align: center; color: #f2c84c; font-size: 17px; font-weight: 900; margin-bottom: 9px; position: relative; }
+    .s5-title::before, .s5-title::after { content: ""; position: absolute; top: 50%; width: 25%; height: 1px; background: #80661b; }
+    .s5-title::before { left: 3%; } .s5-title::after { right: 3%; }
+    .draw-result-items { width: 100%; display: flex; flex-wrap: nowrap; justify-content: center; align-items: flex-start; gap: clamp(2px, 1vw, 7px); min-width: 0; }
+    .draw-number { display: flex; flex: 0 1 42px; min-width: 0; flex-direction: column; align-items: center; gap: 4px; }
+    .draw-style5 .ball {
+      width: clamp(28px, 7.6vw, 38px); height: clamp(28px, 7.6vw, 38px); min-width: 0;
+      flex-basis: auto; color: #fff; font-size: clamp(12px, 3.5vw, 16px);
+      background: linear-gradient(180deg, #ef4740, #c71919); box-shadow: inset 0 -3px 0 rgba(0,0,0,.18);
+    }
+    .draw-style5 .ball.green { background: linear-gradient(180deg, #45b66a, #238245); }
+    .draw-style5 .ball.blue { background: linear-gradient(180deg, #448cff, #1552c7); }
+    .draw-style5 .ball.waiting{border:1px solid #5b5141;color:#b7aa8c;background:linear-gradient(180deg,#34312b,#171715);box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
+    .draw-number .zodiac { color: #f2d27d; font-size: clamp(13px, 3.8vw, 16px); font-weight: 900; line-height: 1; white-space: nowrap; }
+    .draw-number.waiting .zodiac{color:#756d5e}
+    .draw-style5 .plus { flex: 0 0 auto; align-self: flex-start; margin: 7px 0 0; padding: 0; font-size: clamp(16px, 4.5vw, 22px); }
+    .draw-style5-right {
+      border-left: 1px solid #80661b;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      align-items: stretch;
+      gap: 0;
+      padding: 0;
+    }
+    .draw-style5-right button, .draw-style5-right a {
+      appearance: none; flex: 1; border: 0; border-bottom: 1px solid #3f331d; padding: 5px 2px;
+      color: var(--gold); background: #0d0e0f; cursor: pointer; font-size: 12px; font-weight: 800;
+      font-family: inherit; white-space: nowrap; text-align: center; line-height: 1.25; text-decoration: none;
+      display: grid; place-items: center;
+    }
+    .draw-style5-right > :last-child { border-bottom: 0; }
+    .draw-style5-right button:hover, .draw-style5-right a:hover { color: #fff0a6; }
+    .draw-sync { grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:9px; min-height:30px; border-top:1px solid #443719; background:#090a0b; color:#716b60; font-size:10px; }
+    .draw-sync button { padding:3px 9px; border:1px solid #5f4c25; border-radius:99px; background:#17130b; color:#d7b85d; font:800 10px inherit; cursor:pointer; }
+    .interlink-section{margin:10px 10px 0;padding:11px 9px 10px;border:1px solid #443721;border-radius:9px;background:linear-gradient(180deg,#17140e,#0e0e0e)}.interlink-head{display:flex;align-items:center;justify-content:center;padding:0 3px 9px;text-align:center}.interlink-head b{color:#edcd75;font-size:14px}.interlink-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.interlink-item{min-width:0;height:42px;display:flex;align-items:center;justify-content:center;padding:6px;border:1px solid #3a3329;border-radius:7px;background:#111;color:#d7cebd;text-decoration:none;font:700 11px inherit;cursor:pointer}.interlink-item:hover{border-color:#9b7434;background:#1c170f;color:#f2d57d}.interlink-icon{display:none}.interlink-item span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.interlink-item.pending{opacity:.62}@media(max-width:430px){.interlink-head b{font-size:12px}.interlink-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.interlink-item{height:40px;padding:5px;font-size:10px}}
+    .live-video-wrap {
+      grid-column: 1 / -1; width: 100%; display: flex; flex-direction: column; align-items: center;
+      padding: 14px 12px 16px; border-top: 1px solid #80661b; background: #090909;
+    }
+    .live-video-wrap[hidden] { display: none; }
+    .live-video-wrap video { display: block; width: min(100%, 760px); aspect-ratio: 16/9; background: #000; border-radius: 10px; border: 1px solid #6d551f; }
+    .live-close { align-self: flex-end; margin-bottom: 10px; padding: 6px 14px; border: 1px solid #806428; border-radius: 18px; background: #1d180d; color: #f1cc61; font: 800 13px inherit; cursor: pointer; }
+    .live-status { width: min(100%,760px); margin-top: 10px; text-align: center; color: #cfcfcf; font-size: 13px; }
+    .utility-card { width: min(100%, 520px); padding: 0; text-align: left; }
+    .utility-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid #51371e; background: linear-gradient(90deg, #714117, #24140c); }
+    .utility-head h2 { margin: 0; color: #f4cf79; font-size: 20px; }
+    .utility-head .close { position: static; flex: 0 0 auto; }
+    .utility-body { padding: 16px; color: #ddd0b8; line-height: 1.7; }
+    .utility-note { margin: 0 0 12px; color: #9f8d72; font-size: 13px; }
+    .history-list { display: grid; gap: 8px; }
+    .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #382a1e; border-radius: 7px; background: #0d0d0f; }
+    .history-item b { color: #f0cd78; } .history-item span { color: #d85d4d; font-weight: 900; }
+    .live-screen { aspect-ratio: 16/9; display: grid; place-items: center; border: 1px solid #3c3021; border-radius: 8px; background: radial-gradient(circle, #1f1f22, #050506); color: #88795f; text-align: center; }
+    .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .quick-item { padding: 14px 10px; border: 1px solid #3d2e20; border-radius: 8px; background: #0e0e10; text-align: center; }
+    .quick-item b { display: block; color: #edcb76; font-size: 18px; } .quick-item small { color: #8e816c; }
+    .pick-overlay { position: fixed; z-index: 100; inset: 0; display: flex; justify-content: center; background: rgba(0,0,0,.82); backdrop-filter: blur(4px); }
+    .pick-overlay[hidden] { display: none; }
+    .pick-assistant { width: min(100%,440px); height: 100dvh; overflow-y: auto; background: #080808; box-shadow: 0 0 60px #000; }
+    .assistant-head { position: sticky; z-index: 4; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #3a3223; background: rgba(8,8,8,.96); backdrop-filter: blur(8px); }
+    .assistant-head strong { display: block; color: var(--gold); font-family: "Songti SC","STSong",serif; font-size: 21px; letter-spacing: .12em; }
+    .assistant-head small { display: block; margin-top: 3px; color: #716b62; font-size: 10px; }
+    .assistant-head button { width: 34px; height: 34px; padding: 0; border: 1px solid #5b4a2c; border-radius: 50%; background: #111; color: var(--gold); font-size: 22px; cursor: pointer; }
+    .assistant-result { padding: 14px 14px 12px; background: linear-gradient(160deg,#17140e,#0a0a09); border-bottom: 1px solid #332d24; }
+    .result-head { display: flex; align-items: center; justify-content: space-between; }
+    .result-head span { color: #c7b37e; font-size: 12px; } .result-head b { color: var(--gold); font-size: 12px; }
+    .result-conditions { display: flex; align-items: center; gap: 5px; margin-top: 8px; overflow-x: auto; scrollbar-width: none; }
+    .result-conditions small { flex: 0 0 auto; color: #716a5f; font-size: 9px; }
+    .result-conditions span { flex: 0 0 auto; padding: 4px 8px; border: 1px solid #665633; border-radius: 99px; color: #cdb678; font-size: 10px; }
+    .result-balls { display: grid; grid-template-columns: repeat(7,1fr); gap: 7px 5px; min-height: 60px; padding: 11px 0; }
+    .result-balls > span { display: grid; place-items: center; width: 36px; max-width: 100%; aspect-ratio: 1; margin: auto; border: 1px solid #e4ca85; border-radius: 50%; color: white; font-size: 12px; font-weight: 800; box-shadow: inset 0 -4px 7px rgba(0,0,0,.24); }
+    .result-balls > span.red { background:#bd3232 }.result-balls > span.blue { background:#2d70b9 }.result-balls > span.green { background:#2f995c }
+    .result-balls.empty { display:flex; align-items:center; justify-content:center; }
+    .result-balls.empty p { margin:0; color:#8a7568; font-size:11px; text-align:center; }
+    .assistant-actions { display:grid; grid-template-columns:1fr 1.35fr; gap:8px; }
+    .assistant-actions button { height:38px; border:1px solid #5a4b30; border-radius:7px; background:#0d0d0d; color:#b5aa97; font-size:12px; cursor:pointer; }
+    .assistant-actions button.primary { border-color:var(--gold); background:linear-gradient(135deg,#d6af5e,#a77d30); color:#090806; font-weight:800; }
+    .compound-entry-wrap { padding:12px 14px 0; }
+    .compound-entry { display:flex; align-items:center; justify-content:space-between; width:100%; min-height:58px; padding:9px 12px; border:1px solid #80672f; border-radius:10px; background:linear-gradient(135deg,#211b10,#0f0e0b); text-align:left; box-shadow:inset 0 0 18px rgba(211,175,87,.06); cursor:pointer; }
+    .compound-entry span { display:block; }.compound-entry b { display:block; color:#f0d98f; font-size:14px; letter-spacing:.04em; }.compound-entry small { display:block; margin-top:4px; color:#857b69; font-size:9px; }.compound-entry em { color:#cbaa58; font-size:10px; font-style:normal; white-space:nowrap; }
+    .compound-entry.active { border-color:#dfbd62; background:linear-gradient(135deg,#3b2d12,#18130b); box-shadow:0 0 0 2px rgba(211,175,87,.12); }
+    .mode-switch { display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:12px 14px 7px; }
+    .mode-switch[hidden] { display:none; }
+    .mode-switch button { height:39px; border:1px solid #50452f; border-radius:8px; background:#101010; color:#9e9688; font-size:12px; cursor:pointer; }
+    .mode-switch button.active { border-color:var(--gold); background:#211c12; color:var(--gold); font-weight:800; }
+    .filter-tabs { position:sticky; z-index:3; top:63px; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; padding:7px 14px 9px; background:rgba(8,8,8,.96); }
+    .filter-tabs button { min-width:0; height:33px; padding:0 2px; border:1px solid #3f392e; border-radius:99px; background:#0e0e0e; color:#8d8578; font-size:10px; cursor:pointer; }
+    .filter-tabs button.active { border-color:var(--gold); background:var(--gold); color:#090806; font-weight:800; }
+    .filter-panel { padding:8px 14px 18px; }
+    .filter-panel > p { display:flex; align-items:center; justify-content:space-between; margin:4px 0 10px; color:var(--gold); font-size:12px; }
+    .filter-panel > p small { color:#6d675e; font-size:9px; font-weight:400; }
+    .filter-options { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+    .filter-options button { min-height:42px; padding:5px 2px; border:1px solid #403b33; border-radius:7px; background:linear-gradient(145deg,#171717,#0c0c0c); color:#c1baae; font-size:12px; cursor:pointer; }
+    .filter-options button.selected { border-color:var(--gold); background:linear-gradient(135deg,#d5ad58,#a37a2f); color:#080705; font-weight:800; box-shadow:0 4px 12px rgba(203,166,85,.18); }
+    .filter-panel.number-mode .filter-options { grid-template-columns:repeat(7,1fr); gap:7px 5px; }
+    .filter-panel.number-mode .filter-options button { min-height:0; aspect-ratio:1; border-radius:50%; font-size:10px; font-weight:800; }
+    .filter-panel.number-mode .filter-options button.red { border-color:#783636;color:#d76b6b }.filter-panel.number-mode .filter-options button.blue { border-color:#315b82;color:#6ca1d2 }.filter-panel.number-mode .filter-options button.green { border-color:#346b4e;color:#6cba8b }
+    .filter-panel.number-mode .filter-options button.selected { border-color:#e1c46f;color:#fff;box-shadow:0 0 0 2px rgba(211,175,87,.22); }
+    .assistant-note { margin:0; padding:0 14px 24px; text-align:center; color:#59554e; font-size:9px; }
+    .compound-panel { padding:10px 14px 24px; }
+    .compound-panel[hidden] { display:none; }
+    .compound-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .compound-title strong { display:block; color:var(--gold); font-size:14px; }.compound-title small { display:block; margin-top:3px; color:#756e64; font-size:9px; }
+    .compound-title b { padding:6px 9px; border:1px solid #56482e; border-radius:99px; background:#15130f; color:var(--gold); font-size:10px; }
+    .compound-tools { display:grid; grid-template-columns:repeat(3,1fr) 1.65fr; gap:6px; margin-bottom:10px; }
+    .compound-tools button { height:34px; border:1px solid #4a4132; border-radius:7px; background:#111; color:#a99f90; font-size:10px; cursor:pointer; }
+    .compound-tools button:last-child { border-color:#735f35; color:#dfc57e; }
+    .compound-number-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:7px; padding:11px 8px; border:1px solid #3d372e; border-radius:10px; background:linear-gradient(145deg,#11100e,#090909); }
+    .compound-number { width:100%; aspect-ratio:1; border:1px solid; border-radius:50%; background:#151515; font-size:10px; font-weight:800; cursor:pointer; opacity:.62; }
+    .compound-number.red{border-color:#6d2c2c;color:#cf6262}.compound-number.blue{border-color:#274f77;color:#5c94c9}.compound-number.green{border-color:#286447;color:#54a97c}
+    .compound-number.selected { border-color:#e1c46f; color:#fff; box-shadow:0 0 0 2px rgba(211,175,87,.22); opacity:1; }
+    .compound-number.red.selected{background:linear-gradient(145deg,#db5a55,#982d2a)}.compound-number.blue.selected{background:linear-gradient(145deg,#559ee0,#25639d)}.compound-number.green.selected{background:linear-gradient(145deg,#55b77f,#24724c)}
+    .compound-panel>label { display:block; margin:13px 0 7px; color:#a79d8d; font-size:11px; }
+    .compound-size { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+    .compound-size button { height:38px; border:1px solid #443d32; border-radius:7px; background:#111; color:#aaa195; font-size:11px; cursor:pointer; }
+    .compound-size button.selected { border-color:var(--gold); background:var(--gold); color:#090806; font-weight:800; }
+    .compound-summary { display:grid; grid-template-columns:1fr auto; align-items:center; margin-top:13px; padding:13px; border:1px solid #50452f; border-radius:9px; background:linear-gradient(145deg,#17140f,#0e0e0d); }
+    .compound-summary>span{color:#a49b8e;font-size:11px}.compound-summary>strong{color:var(--gold);font-size:24px}.compound-summary>strong small{font-size:10px}.compound-summary>p{grid-column:1/-1;margin:4px 0 0;color:#69635a;font-size:9px}
+    .compound-actions { display:grid; grid-template-columns:1fr 1.5fr; gap:8px; margin-top:10px; }
+    .compound-actions button { height:40px; border:1px solid #51462f; border-radius:7px; background:#101010; color:#aaa195; font-size:11px; cursor:pointer; }
+    .compound-actions button.primary { border-color:var(--gold); background:linear-gradient(135deg,#d5ad58,#a37a2f); color:#090806; font-weight:800; }
+    .compound-results { margin-top:14px; border-top:1px solid #3b352a; padding-top:11px; }
+    .compound-results[hidden]{display:none}.compound-results>div{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.compound-results>div strong{color:var(--gold);font-size:12px}.compound-results>div button{height:30px;padding:0 11px;border:1px solid var(--gold);border-radius:99px;background:none;color:var(--gold);font-size:9px;cursor:pointer}.compound-results ol{max-height:330px;margin:0;padding:0;overflow-y:auto;list-style:none;border:1px solid #332f29;border-radius:7px}.compound-results li{display:grid;grid-template-columns:38px 1fr;align-items:center;min-height:35px;padding:0 8px;border-bottom:1px solid #302c26}.compound-results li small{color:#69635a;font-size:8px}.compound-results li span{color:#d4bd80;font-size:10px;letter-spacing:.05em}
+    .notice { margin: 6px 7px 13px; padding: 11px; color: #f2cf81; text-align: center; font-size: 13px; border: 1px dashed #6c4a25; background: #120f0c; }
+    .banner {
+      margin: 14px 7px; min-height: 88px; display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 20px; overflow: hidden; position: relative; border-radius: 7px;
+      background: linear-gradient(115deg, #107744 0 43%, #1db96e 43% 100%); box-shadow: inset 0 0 0 2px rgba(255,255,255,.13);
+    }
+    .banner::after { content: ""; position: absolute; width: 170px; height: 170px; right: -45px; border: 16px solid rgba(255,255,255,.12); border-radius: 50%; }
+    .banner.orange { background: linear-gradient(115deg, #a92714, #ff7d18 60%, #8f1010); }
+    .banner.purple { background: linear-gradient(115deg, #351073, #7a18a5 55%, #db552a); }
+    .banner.gold { background: linear-gradient(115deg, #1b0e04, #8f5b13 60%, #1b0e04); }
+    .banner-copy { position: relative; z-index: 1; }
+    .banner-copy strong { display: block; font-size: clamp(20px, 4.4vw, 31px); color: #fff7c2; line-height: 1.1; text-shadow: 0 2px 4px #431800; }
+    .banner-copy small { display: block; margin-top: 8px; font-size: 13px; font-weight: 800; color: white; }
+    .banner-badge { position: relative; z-index: 1; padding: 8px 12px; border-radius: 999px; white-space: nowrap; background: #fff8d9; color: #8f2b0e; font-weight: 1000; }
+    .image-ad { margin:12px 7px;overflow:hidden;border:1px solid #493819;border-radius:10px;background:#090909;box-shadow:0 5px 18px rgba(0,0,0,.28) }
+    .image-ad a{display:block;line-height:0}.image-ad img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;background:#090909}
+    .section-card[hidden] + .image-ad { display:none }
+    .section-card { margin: 12px 7px; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg, #21130f, #111114); border: 1px solid #2b201a; }
+    .section-title { padding: 17px 10px; text-align: center; color: #e7c378; font-size: 18px; font-weight: 900; }
+    .section-title::after { content:"123MH.COM";display:block;margin-top:5px;color:#8f7a50;font-size:10px;font-weight:800;letter-spacing:2.5px;line-height:1 }
+    .flower { color:#fff; width:24px; height:24px; display:inline-grid; place-items:center; margin-right:7px; border-radius:7px; background:linear-gradient(145deg,#d49b36,#845015); border:1px solid #f1c568; box-shadow:0 2px 8px rgba(0,0,0,.28); font-size:12px; font-weight:900; }
+    .flower.lottery-hk { background:linear-gradient(145deg,#ee4e55,#8e1721);border-color:#ff8c91 }
+    .flower.lottery-crazy { background:linear-gradient(145deg,#8a5bea,#44248f);border-color:#bda0ff }
+    .table-head, .table-row { display: grid; grid-template-columns: 1fr 2.2fr 1.1fr; align-items: center; }
+    .table-head { margin: 0 9px; padding: 12px 7px; border-radius: 8px 8px 0 0; color: #fff3d0; font-weight: 900; background: linear-gradient(#ae7938, #734518); }
+    .table-head span:last-child { text-align: right; }
+    .table-body { min-height: 126px; margin: 0 9px; background: #0a0a0d; }
+    .table-row { padding: 13px 8px; color: #bca681; border-bottom: 1px solid #1e1e22; font-size: 13px; animation: fadeIn .35s ease; }
+    .table-row b { color: #f1d68f; }
+    .table-row .result { text-align: right; color: #e76851; font-weight: 900; }
+    .five-data-body { margin: 0 9px; background:#0a0a0d; }
+    .five-row { padding:12px 10px; border-bottom:1px solid #29231d; animation:fadeIn .35s ease; }
+    .five-row:last-child { border-bottom:0; }
+    .five-row-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .five-row-head b { color:#f1d68f; font-size:14px; }.five-row-head span { color:#e76851; font-size:12px; font-weight:900; }
+    .five-pick-line { display:grid; grid-template-columns:42px minmax(0,1fr); align-items:center; gap:7px; margin-top:7px; }
+    .five-pick-line>small { color:#8f7d62; font-size:11px; }
+    .zodiac-picks, .number-picks { display:grid; grid-template-columns:repeat(8,1fr); gap:6px; }
+    .zodiac-picks span { display:grid; place-items:center; min-height:30px; border:1px solid #604921; border-radius:6px; background:linear-gradient(145deg,#211b11,#110f0c); color:#e9c879; font-size:13px; font-weight:800; }
+    .number-picks span { width:30px; height:30px; display:grid; place-items:center; justify-self:center; border-radius:50%; color:white; font-size:12px; font-weight:900; box-shadow:inset 0 -3px 0 rgba(0,0,0,.2); }
+    .number-picks .red { background:#c63a35 }.number-picks .blue { background:#367ac0 }.number-picks .green { background:#38965a }.number-picks span.hit{box-shadow:0 0 0 2px #ffd66f,0 0 14px rgba(255,214,111,.45);transform:scale(1.08)}
+    .four-data-body { margin:0 9px; background:#0a0a0d; }
+    .four-row { display:grid; grid-template-columns:94px minmax(0,1fr) 64px; align-items:center; min-height:58px; padding:10px 8px; border-bottom:1px solid #29231d; animation:fadeIn .35s ease; }
+    .four-row:last-child { border-bottom:0; }.four-issue{color:#f1d68f;font-size:15px;font-weight:900;white-space:nowrap}.four-numbers{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));justify-content:center;gap:3px}.four-number{width:34px;height:34px;display:grid;place-items:center;justify-self:center;border:1px solid #5b5141;border-radius:50%;background:#0d0d0e;color:#ddd5c8;font-size:16px;font-weight:900}.four-number.hit{border-color:#ff3855;background:#ff3855;color:#fff;box-shadow:0 0 12px rgba(255,56,85,.3)}.four-result{text-align:right;color:#e76851;font-size:14px;font-weight:900;white-space:nowrap}
+    .tail-data-body { margin:0 9px; background:#0a0a0d; }.tail-row{display:flex;align-items:center;justify-content:center;min-height:58px;padding:11px 8px;border-bottom:1px solid #29231d;color:#e7d7b5;font-size:16px;font-weight:900;white-space:nowrap;animation:fadeIn .35s ease}.tail-row:last-child{border-bottom:0}.tail-issue{color:#f1d68f}.tail-label{margin:0 4px;color:#d7c49e}.tail-bracket{color:#d5ae55}.tail-pick{color:#e4ca88}.tail-pick.hit,.tail-result.hit{padding:2px 4px;border-radius:4px;background:#c93838;color:#fff;box-shadow:0 0 10px rgba(255,56,85,.28)}.tail-result{margin-left:5px;color:#9c8d78}.tail-result.pending-label{color:#8d8170}
+    .strategy-history-body{display:grid;gap:9px;margin:0 9px;padding:10px;border:1px solid #302617;border-radius:10px;background:linear-gradient(180deg,#0b0b0d,#080809)}
+    .strategy-period{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr) 74px;align-items:center;gap:11px;min-height:72px;padding:10px 11px;overflow:hidden;border:1px solid #3c3020;border-radius:9px;background:linear-gradient(135deg,#1b1813,#101012 58%,#18120b);box-shadow:inset 3px 0 0 #b68535;animation:fadeIn .35s ease}
+    .strategy-period::after{content:"";position:absolute;right:-22px;top:-30px;width:82px;height:82px;border:1px solid rgba(218,175,85,.08);border-radius:50%;pointer-events:none}
+    .strategy-issue{position:relative;z-index:1;display:grid;place-items:center;align-self:stretch;border-right:1px solid #33291d;color:#f5d27d;font-size:17px;font-weight:1000;line-height:1.05;white-space:nowrap}.strategy-issue small{display:block;margin-top:5px;color:#786b58;font-size:9px;font-weight:700;letter-spacing:.08em}
+    .strategy-numbers{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.strategy-number{height:43px;display:flex;align-items:baseline;justify-content:center;gap:1px;border:1px solid #6b532d;border-radius:9px;background:linear-gradient(145deg,#2a2113,#111);color:#f4cd70;font-size:20px;font-weight:1000;box-shadow:inset 0 1px 0 rgba(255,220,142,.08)}.strategy-number i{color:#a98b50;font-size:10px;font-style:normal}.strategy-number.hit{border-color:#ff766e;background:linear-gradient(145deg,#e14b43,#8f1717);color:#fff;box-shadow:0 0 0 2px rgba(224,58,50,.16),0 5px 14px rgba(181,31,28,.28)}.strategy-number.hit i{color:#ffe3d7}
+    .strategy-result{position:relative;z-index:1;display:grid;place-items:center;min-height:34px;padding:5px 6px;border:1px solid #51432e;border-radius:99px;background:#17140f;color:#aa9671;font-size:11px;font-weight:900;text-align:center;white-space:nowrap}.strategy-result.hit{border-color:#bd3c35;background:#9f2925;color:#fff}.strategy-result.pending-label{border-color:#66522d;background:#211a0d;color:#dbb75f!important}
+    .strategy-body { margin:0 9px 11px; background:#0a0a0d; }
+    .strategy-row { display:grid; grid-template-columns:48px minmax(0,1fr); align-items:center; min-height:58px; padding:8px; border-bottom:1px solid #29231d; }.strategy-row:last-child{border-bottom:0}
+    .strategy-label { text-align:center; color:#efca76; font-size:13px; font-weight:900; }.strategy-row.assist .strategy-label{color:#6ea7e5}.strategy-row.reserve .strategy-label{color:#e66d63}
+    .wave-data-body{margin:0 9px;background:#0a0a0d}.wave-row{display:grid;grid-template-columns:88px minmax(0,1fr) 76px;align-items:center;min-height:58px;padding:7px 8px;border-bottom:1px solid #29231d;animation:fadeIn .35s ease}.wave-row:last-child{border-bottom:0}.wave-issue{color:#f1d68f;font-size:13px;white-space:nowrap}.wave-picks{display:grid;grid-template-columns:repeat(2,68px);justify-content:center;gap:9px}.wave-chip{height:32px;display:grid;place-items:center;border-radius:7px;color:#fff;font-size:12px;font-weight:900;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}.wave-chip.red{background:#bd3733}.wave-chip.blue{background:#3477b9}.wave-chip.green{background:#35945a}.wave-result{text-align:right;color:#8c8171;font-size:9px}.wave-result b{display:block;margin-top:4px;color:#62ca81;font-size:11px}.wave-result b.miss{color:#ef6464}
+    .kill-data-body{margin:0 9px;background:#0a0a0d}.kill-row{padding:10px 8px;border-bottom:1px solid #29231d;animation:fadeIn .35s ease}.kill-row:last-child{border-bottom:0}.kill-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.kill-head b{color:#f1d68f;font-size:13px}.kill-head span{color:#82776a;font-size:10px}.kill-head strong{margin-left:6px;color:#62ca81;font-size:11px}.kill-head strong.failed{color:#ef6464}.kill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.kill-item{display:grid;grid-template-columns:1fr;gap:3px;place-items:center;min-height:43px;border:1px solid #44382a;border-radius:7px;background:#111}.kill-item small{color:#756d62;font-size:9px}.kill-item b{color:#e2c174;font-size:13px}.kill-item.failed{border-color:#a83434;background:#271010}.kill-item.failed b{color:#ff7168}
+    .poem-data-body{margin:0 9px;background:#0a0a0d}.poem-row{padding:11px 9px;border-bottom:1px solid #29231d;animation:fadeIn .35s ease}.poem-row:last-child{border-bottom:0}.poem-head{display:flex;align-items:center;justify-content:space-between}.poem-head b{color:#f1d68f;font-size:12px}.poem-head span{color:#897d6d;font-size:9px}.poem-head strong{margin-left:5px;color:#62ca81;font-size:10px}.poem-text{margin:10px 0;color:#efd28b;text-align:center;font-family:"Songti SC","STSong",serif;font-size:16px;font-weight:800;letter-spacing:.06em}.poem-zodiacs{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.poem-zodiacs span{height:27px;display:grid;place-items:center;border:1px solid #51442f;border-radius:6px;background:#12110f;color:#c9b17a;font-size:11px;font-weight:800}.poem-zodiacs span.hit{border-color:#ff4b4b;background:#bd302d;color:#fff;box-shadow:0 0 10px rgba(255,56,65,.2)}
+    .ten-data-body{margin:0 9px;background:#0a0a0d}.ten-row{padding:10px 8px;border-bottom:1px solid #29231d;animation:fadeIn .35s ease}.ten-row:last-child{border-bottom:0}.ten-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.ten-head b{color:#f1d68f;font-size:12px}.ten-head span{color:#897d6d;font-size:9px}.ten-head strong{margin-left:5px;color:#62ca81;font-size:10px}.ten-head strong.miss{color:#ef6464}.ten-numbers{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}.ten-number{width:31px;height:31px;display:grid;place-items:center;justify-self:center;border:1px solid #5b5141;border-radius:50%;background:#0d0d0e;color:#ddd5c8;font-size:11px;font-weight:900}.ten-number.hit{border-color:#ff3855;background:#ff3855;color:#fff;box-shadow:0 0 12px rgba(255,56,85,.25)}
+    .wave-chip.hit{outline:2px solid #ffd66f;box-shadow:0 0 14px rgba(255,214,111,.45),inset 0 -3px 0 rgba(0,0,0,.18);transform:scale(1.06)}
+    .poem-head strong.miss{color:#ef6464}
+    .four-zodiac-body{margin:0 9px;background:#0a0a0d}.four-zodiac-row{padding:8px;border-bottom:1px solid #29231d;animation:fadeIn .35s ease}.four-zodiac-result{display:flex;align-items:center;justify-content:space-between;padding:7px 8px;margin-bottom:3px;border:1px solid #443720;border-radius:6px;background:#17130c}.four-zodiac-result b{color:#e8c668;font-size:12px}.four-zodiac-result span{color:#eee;font-size:13px;font-weight:900}.four-zodiac-result span.pending-label{color:#8b8170}.four-zodiac-line{display:grid;grid-template-columns:94px minmax(0,1fr) 62px;align-items:center;min-height:38px;border-bottom:1px dashed #27231d;font-size:14px}.four-zodiac-line:last-child{border-bottom:0}.four-zodiac-line b{color:#f1d68f;white-space:nowrap}.four-zodiac-values{color:#ddd5c8;font-weight:900;letter-spacing:1px}.four-zodiac-values.hit,.four-zodiac-line em.hit{color:#ff575f}.four-zodiac-line em{text-align:right;color:#81796d;font-size:11px;font-style:normal;font-weight:900}.four-zodiac-line em.miss{color:#9b8d79}
+    .paogou-card{padding-bottom:12px}.paogou-tabs{display:flex;justify-content:center;gap:9px;padding:2px 10px 9px}.paogou-tabs button{min-width:122px;padding:9px 14px;border:1px solid #504738;border-radius:8px;background:linear-gradient(180deg,#39332a,#211e1a);color:#d1c4ae;font-weight:800;cursor:pointer}.paogou-tabs button.active{border-color:#a67b37;background:linear-gradient(180deg,#936a35,#5c3d1d);color:#fff1ca;box-shadow:0 4px 14px rgba(179,124,45,.18)}.paogou-periods{display:flex;justify-content:center;gap:6px;padding:0 10px 10px}.paogou-periods button{min-width:74px;height:30px;border:1px solid #40382d;border-radius:99px;background:#111;color:#8f8678;font-size:10px;font-weight:800;cursor:pointer}.paogou-periods button.active{border-color:#9b7434;background:#291f11;color:#edc66b}.paogou-view{margin:0 9px;overflow:hidden;border:1px solid #413529;border-radius:9px;background:#08080a}.paogou-meta{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-bottom:1px solid #342b22;color:#e6c575;font-size:12px}.paogou-meta small{color:#857b6d}.paogou-image{display:block;width:100%;height:auto}.paogou-image[hidden]{display:none}
+    .recommend-panel { margin:12px 7px 14px; overflow:hidden; border:1px solid #50351e; border-radius:10px; background:linear-gradient(180deg,#21130f,#101012); }
+    .recommend-title { padding:16px 8px; text-align:center; color:#efca76; font-size:17px; font-weight:900; letter-spacing:.04em; border-bottom:1px solid #3c2b20; }
+    .recommend-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding:10px; }
+    .expert-card { position:relative; min-height:112px; display:block; padding:11px; border:1px solid #403325; border-radius:9px; background:linear-gradient(145deg,#1a1711,#0b0b0c 70%); color:inherit; text-decoration:none; overflow:hidden; transition:.18s ease; }.expert-card:hover{border-color:#9b7534;transform:translateY(-1px)}
+    .expert-rank { position:absolute; top:8px; right:8px; min-width:23px; height:23px; padding:0 5px; display:grid; place-items:center; border:1px solid #5a482a; border-radius:99px; color:#9f8c6d; background:#12100c; font-size:9px; font-weight:900; }.expert-rank.top{border-color:#d1a94f;background:#5b4017;color:#ffe596}
+    .expert-head{display:flex;align-items:center;gap:8px;padding-right:28px}.expert-avatar{width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;border:1px solid #8c682d;border-radius:50%;background:linear-gradient(145deg,#4d3713,#1c1509);color:#f1ce6d;font-size:13px;font-weight:1000}.expert-author{min-width:0;color:#e7cb88;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.expert-author small{display:block;margin-top:2px;color:#6f6556;font-size:8px;font-weight:600}
+    .expert-category{margin-top:10px;padding:7px 5px;border:1px solid #3b3020;border-radius:6px;background:#100f0d;color:#f0c85f;text-align:center;font-size:14px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .expert-meta { display:flex; align-items:center; justify-content:space-between; margin-top:9px; color:#8e806b; font-size:9px; }.expert-source{padding:3px 6px;border-radius:99px;background:#15301e;color:#65cf83;font-size:8px}.expert-source.featured{background:#35250d;color:#e9bd55}
+    .expert-pager { display:flex; align-items:center; justify-content:center; gap:12px; padding:2px 10px 12px; }.expert-pager button{min-width:72px;height:32px;border:1px solid #59491f;border-radius:7px;background:#15130e;color:#e0bd5c;font:800 11px inherit;cursor:pointer}.expert-pager button:disabled{opacity:.3}.expert-pager span{min-width:58px;text-align:center;color:#827868;font-size:10px}
+    .wuqi-panel { border-color:#4a2f18; }
+    .wuqi-subtitle { margin:-9px 0 12px; text-align:center; color:#887a64; font-size:11px; }
+    .wuqi-grid { border-top:1px solid #2b2f32; }
+    .wuqi-row { display:grid; grid-template-columns:minmax(48px,64px) minmax(0,1fr) 48px; align-items:center; min-height:54px; border-bottom:1px solid #202326; }
+    .wuqi-row:last-child { border-bottom:0; }
+    .wuqi-issue { padding-left:8px; color:#f1f1f1; font-size:14px; white-space:nowrap; }.wuqi-issue small { display:block; margin-top:3px; color:#6f6b64; font-size:9px; }
+    .wuqi-numline { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:4px; align-items:center; padding:5px 2px; }
+    .wuqi-num { width:100%; max-width:32px; aspect-ratio:1; display:grid; place-items:center; margin:auto; border:1px solid #8d2630; border-radius:50%; background:#0d0d0e; color:#fff; font-size:11px; font-weight:800; }
+    .wuqi-num.hit { border-color:#ff3855; background:#ff3855; box-shadow:0 0 14px rgba(255,56,85,.25); }
+    .wuqi-result { padding-right:6px; text-align:right; color:#aaa; font-size:11px; font-weight:800; }.wuqi-result small { display:block; margin-top:3px; font-size:9px; }.wuqi-result.win { color:#65db87; }.wuqi-result.lose { color:#ef6464; }.wuqi-result.pending { color:#968f84; }
+    .wuqi-history { border-top:1px solid #302918; padding:9px 8px 10px; }
+    .wuqi-history-label { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }.wuqi-history-label span{color:#d8bd6b;font-size:11px}.wuqi-history-label small{color:#6f695f;font-size:9px}
+    .wuqi-nav { display:grid; grid-template-columns:32px minmax(0,1fr) 32px; gap:5px; align-items:center; }
+    .wuqi-arrow { height:32px; border:1px solid #59491f; border-radius:7px; background:#15130e; color:#e5c35e; font-size:19px; cursor:pointer; }.wuqi-arrow:disabled{opacity:.3}
+    .wuqi-periods { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }.wuqi-periods button{flex:0 0 auto;height:30px;padding:0 9px;border:1px solid #59491f;border-radius:7px;background:#15130e;color:#aaa;font:800 11px inherit;white-space:nowrap;cursor:pointer}.wuqi-periods button.active{border-color:#b28c25;background:linear-gradient(180deg,#34290c,#201907);color:#f5c84b}
+    .wuqi-state { min-height:120px; display:grid; place-items:center; color:#8d8476; font-size:12px; }
+    .wuqi-state[hidden] { display:none; }
+    .pager { display: grid; grid-template-columns: 1fr auto 1fr; gap: 7px; margin: 10px 9px 11px; }
+    .pager button { border: 1px solid #342b20; min-height: 40px; color: #c89c55; background: #2a281f; cursor: pointer; }
+    .pager button:first-child { border-radius: 5px 0 0 5px; } .pager button:last-child { border-radius: 0 5px 5px 0; }
+    .pager button.active { background: linear-gradient(#bd873e, #744719); color: white; }
+    .pager button:disabled { opacity:.35; cursor:not-allowed; }
+    .pager-status { min-width:72px; display:grid; place-items:center; border:1px solid #594322; background:#18150f; color:#d8b76d; font-size:11px; }
+    .pending-label { color:#c7b263!important; }
+    .footer { padding: 30px 16px 42px; color: #766548; text-align: center; font-size: 12px; line-height: 1.8; }.footer a{display:inline-block;margin-top:7px;color:#8d7a55;text-decoration:none}
+    .backtop { position: fixed; right: max(12px, calc((100vw - 760px)/2 - 55px)); bottom: 22px; width: 42px; height: 42px; border: 1px solid #694c25; border-radius: 50%; background: #16100cdd; color: var(--gold); cursor: pointer; opacity: 0; pointer-events: none; transition: .2s; }
+    .backtop.show { opacity: 1; pointer-events: auto; }
+    .toast { position: fixed; z-index: 30; left: 50%; bottom: 25px; transform: translate(-50%, 20px); padding: 10px 16px; border-radius: 999px; color: #231506; background: #f1ca76; font-weight: 800; opacity: 0; transition: .25s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .modal { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(0,0,0,.82); transition: .25s; }
+    .modal.hidden { visibility:hidden;opacity:0;pointer-events:none; }
+    .modal-card { width: min(100%, 500px); position: relative; overflow: hidden; padding: 22px 18px 18px; border: 2px solid #b67b2f; border-radius: 16px; background: radial-gradient(circle at 50% 0, #4b1d14, #080809 60%); box-shadow: 0 0 38px rgba(246,170,44,.25); text-align: center; }
+    .modal-card h2 { margin: 0; font-size: 30px; color: #ffd16c; } .modal-card p { color: #dfbf85; }
+    .popup-ad-card{width:min(90vw,420px);position:relative;overflow:hidden;border:2px solid #b98a38;border-radius:14px;background:#080808;box-shadow:0 0 42px rgba(218,165,59,.28)}.popup-ad-link{display:block;line-height:0}.popup-ad-image{display:block;width:100%;max-height:82vh;object-fit:contain;background:#080808}
+    .close { position: absolute; z-index:3; top: 8px; right: 10px; width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; color: white; background: rgba(0,0,0,.72); font-size: 25px; line-height:30px; cursor: pointer; box-shadow:0 2px 10px rgba(0,0,0,.35) }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } }
+    @media (max-width: 560px) {
+      .topbar { height: 66px; } .dog-mark { width: 38px; height:46px; } .brand-copy b { font-size: 15px; }
+      .tool-btn { min-height: 56px; font-size: 12px; } .tool-btn span { font-size: 17px; }
+      .tab-btn { font-size: 13px; min-height: 43px; }
+      .draw-head strong { font-size: 15px; } .draw-head em { font-size: 12px; }
+      .balls { gap: 5px; padding-inline: 4px; } .ball-wrap { min-width: 39px; } .ball { width: 34px; height: 34px; font-size: 14px; }
+      .zodiac { font-size: 10px; margin-top: 6px; } .plus { font-size: 19px; }
+      .banner { min-height: 72px; padding: 12px; } .banner-badge { font-size: 12px; padding: 7px 9px; }
+      .section-title { font-size: 15px; padding: 14px 6px; }
+      .table-head, .table-row { grid-template-columns: 1fr 1.7fr 1.05fr; font-size: 12px; }
+      .five-row { padding:11px 7px; }.five-pick-line { grid-template-columns:38px minmax(0,1fr); gap:4px; }.zodiac-picks,.number-picks{gap:4px}.zodiac-picks span{font-size:12px}.number-picks span{width:28px;height:28px;font-size:11px}
+      .wuqi-row{grid-template-columns:46px minmax(0,1fr) 42px}.wuqi-issue{padding-left:4px;font-size:11px}.wuqi-numline{gap:2px}.wuqi-num{font-size:9px}.wuqi-result{padding-right:3px;font-size:9px}
+      .four-data-body{margin-left:4px;margin-right:4px}.four-row{grid-template-columns:70px minmax(0,1fr) 49px;min-height:58px;padding:10px 2px}.four-issue{font-size:11.5px}.four-numbers{grid-template-columns:repeat(10,minmax(0,1fr));gap:1px}.four-number{width:23px;height:23px;font-size:12.5px}.four-result{font-size:11px}
+      .tail-data-body{margin-left:4px;margin-right:4px}.tail-row{min-height:56px;padding:10px 2px;font-size:13px}.tail-label{margin:0 2px}.tail-pick.hit,.tail-result.hit{padding:2px 3px}.tail-result{margin-left:3px}
+      .strategy-history-body{margin:0 4px;padding:7px;gap:7px}.strategy-period{grid-template-columns:57px minmax(0,1fr) 57px;gap:6px;min-height:64px;padding:8px 6px}.strategy-issue{font-size:14px}.strategy-issue small{font-size:7px}.strategy-numbers{gap:5px}.strategy-number{height:38px;border-radius:7px;font-size:17px}.strategy-number i{font-size:8px}.strategy-result{min-height:31px;padding:4px 3px;font-size:9px}
+      .wave-row{grid-template-columns:70px minmax(0,1fr) 62px;padding:7px 5px}.wave-issue{font-size:11px}.wave-picks{grid-template-columns:repeat(2,58px);gap:6px}.wave-chip{height:29px;font-size:11px}.wave-result{font-size:8px}.wave-result b{font-size:10px}
+      .kill-row{padding:9px 6px}.kill-head b{font-size:11px}.kill-grid{gap:4px}.kill-item{min-height:40px}.kill-item b{font-size:11px}
+      .poem-row{padding:10px 6px}.poem-text{font-size:14px}.poem-zodiacs{gap:3px}.poem-zodiacs span{font-size:10px}
+      .ten-row{padding:9px 5px}.ten-numbers{gap:2px}.ten-number{width:27px;height:27px;font-size:9px}.ten-head b{font-size:11px}
+      .four-zodiac-body{margin-left:4px;margin-right:4px}.four-zodiac-row{padding:6px 4px}.four-zodiac-line{grid-template-columns:82px minmax(0,1fr) 52px;min-height:36px;font-size:12px}.four-zodiac-values{font-size:11px;letter-spacing:0}
+      .recommend-title{font-size:14px}.expert-title{font-size:12px}
+      .backtop { right: 12px; }
+      .draw-style5 { grid-template-columns: 22% minmax(0, 60%) 18%; min-height: 142px; }
+      .draw-style5-left { padding: 10px 5px; }
+      .s5-period { font-size: 12px; } .s5-label { margin-top: 8px; font-size: 10px; } .s5-countdown { font-size: 15px; }
+      .draw-style5-center { padding: 9px 2px 8px; }
+      .s5-title { margin-bottom: 7px; font-size: 14px; }
+      .draw-result-items { gap: 2px; }
+      .draw-style5-right { gap: 0; padding: 0; }
+      .draw-style5-right button, .draw-style5-right a { padding: 4px 1px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><img class="dog-mark" src="assets/mahui-logo.png" alt="马会资料标志"><span class="brand-copy"><b>马会资料</b><small>永久免费公开</small></span></div>
+      <div class="domain">123MH.COM</div>
+    </header>
+
+    <nav class="lottery-tabs" aria-label="彩种切换">
+      <button class="tab-btn active" data-lottery="澳门">澳门</button>
+      <button class="tab-btn" data-lottery="香港">香港</button>
+      <button class="tab-btn" data-lottery="疯狂天天彩">疯狂天天彩</button>
+    </nav>
+    <section class="draw-style5">
+      <div class="draw-style5-left">
+        <div class="s5-period">第<span id="issue">2026227</span>期</div>
+        <div class="s5-label">距开奖</div>
+        <div class="s5-countdown" id="countdown">02:18:36</div>
+      </div>
+      <div class="draw-style5-center">
+        <div class="s5-title" id="lotteryName">澳门六合彩</div>
+        <div class="draw-result-items" id="balls"></div>
+      </div>
+      <div class="draw-style5-right">
+        <a href="history.html">历史记录</a>
+        <a href="live.html">开奖直播</a>
+        <a href="chat.html">心水交流</a>
+        <button data-action="pick">挑码助手</button>
+      </div>
+      <div class="draw-sync"><span id="drawSync">正在同步开奖数据…</span><button id="refreshDraw" type="button">刷新</button></div>
+    </section>
+
+    <section class="interlink-section" aria-label="互联网站">
+      <div class="interlink-head"><b id="interlinkTitle">↓↓★★★澳门连准网站推荐★★★↓↓</b></div>
+      <div class="interlink-grid" id="interlinkGrid">
+        <button class="interlink-item pending" type="button" data-pending-site="雷锋论坛"><span class="interlink-icon">雷</span><span>雷锋论坛</span></button>
+        <a class="interlink-item" href="https://228177.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">播</span><span>六合直播</span></a>
+        <a class="interlink-item" href="https://tktkt-001.6hgsgdfgd.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">式</span><span>六合公式</span></a>
+        <a class="interlink-item" href="https://azy1.sadfr85g.com/#/" target="_blank" rel="noreferrer"><span class="interlink-icon">图</span><span>澳门图库</span></a>
+        <a class="interlink-item" href="https://97kj.winnshier.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">97</span><span>97开奖</span></a>
+        <a class="interlink-item" href="https://qingw.h6sdeg6.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">蛙</span><span>青蛙论坛</span></a>
+        <a class="interlink-item" href="https://paogt06.h6sdeg6.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">马</span><span>澳门马会</span></a>
+        <a class="interlink-item" href="https://liuhe-baodian-lt02.yghj8s1r8.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">典</span><span>六合宝典</span></a>
+        <a class="interlink-item" href="https://caisb1.3618tk.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">财</span><span>财神论坛</span></a>
+        <a class="interlink-item" href="https://xn--hdc3gc0b0a2g.xn--gecrj9c/" target="_blank" rel="noreferrer"><span class="interlink-icon">曾</span><span>曾道人</span></a>
+        <a class="interlink-item" href="https://macaujckj.com/" target="_blank" rel="noreferrer"><span class="interlink-icon">澳</span><span>澳门开奖</span></a>
+        <a class="interlink-item" href="https://yilufa-pingte.xcx8088.workers.dev/" target="_blank" rel="noreferrer"><span class="interlink-icon">发</span><span>一路发平特</span></a>
+        <a class="interlink-item" href="history.html"><span class="interlink-icon">历</span><span>历史记录</span></a>
+        <a class="interlink-item" href="live.html"><span class="interlink-icon">直</span><span>开奖直播</span></a>
+        <a class="interlink-item" href="chat.html"><span class="interlink-icon">聊</span><span>心水交流</span></a>
+        <button class="interlink-item" type="button" data-action="pick"><span class="interlink-icon">挑</span><span>挑码助手</span></button>
+      </div>
+    </section>
+
+    <div class="image-ad" id="topImageAd" data-ad-stat="0"><img src="assets/ad-slot-gold.svg" alt="广告图片位置"></div>
+    <section class="section-card wuqi-panel" id="wuqiPanel">
+      <div class="section-title"><span class="flower">✿</span>五期必中·特码</div>
+      <div class="wuqi-subtitle" id="wuqiSubtitle">澳门 · 每五期一组 · 接口实时同步</div>
+      <div class="wuqi-state" id="wuqiState">正在载入五期必中数据…</div>
+      <div class="wuqi-grid" id="wuqiGrid" hidden></div>
+      <div class="wuqi-history" id="wuqiHistory" hidden><div class="wuqi-history-label"><span>往期记录</span><small>每五期一组</small></div><div class="wuqi-nav"><button class="wuqi-arrow" id="wuqiPrev">‹</button><div class="wuqi-periods" id="wuqiPeriods"></div><button class="wuqi-arrow" id="wuqiNext">›</button></div></div>
+    </section>
+    <div id="sections"></div>
+    <footer class="footer">本站资料仅供参考，开奖结果以官方公布为准。<br>健康娱乐 · 理性浏览</footer>
+  </main>
+
+  <button class="backtop" id="backtop" aria-label="返回顶部">↑</button>
+  <div class="toast" id="toast" role="status"></div>
+
+  <div class="modal hidden" id="promoModal" role="dialog" aria-modal="true" aria-label="图片广告" hidden>
+    <div class="popup-ad-card">
+      <button class="close" id="closeModal" aria-label="关闭">×</button>
+      <a class="popup-ad-link" id="popupAdLink"><img class="popup-ad-image" id="popupAdImage" src="assets/popup-ad-placeholder.svg" alt="弹窗广告图片"></a>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="utilityModal" role="dialog" aria-modal="true" aria-labelledby="utilityTitle">
+    <div class="modal-card utility-card">
+      <div class="utility-head">
+        <h2 id="utilityTitle">功能面板</h2>
+        <button class="close" id="closeUtility" aria-label="关闭">×</button>
+      </div>
+      <div class="utility-body" id="utilityBody"></div>
+    </div>
+  </div>
+
+  <div class="pick-overlay" id="pickOverlay" role="dialog" aria-modal="true" aria-label="挑码助手" hidden>
+    <section class="pick-assistant">
+      <header class="assistant-head"><div><strong>挑码助手</strong><small>组合条件，快速筛选 01–49</small></div><button id="closePick" aria-label="关闭挑码助手">×</button></header>
+      <div class="assistant-result">
+        <div class="result-head"><span id="pickResultTitle">选号结果</span><b><span id="pickCount">0</span> 个</b></div>
+        <div class="result-conditions" id="pickConditions"></div>
+        <div class="result-balls empty" id="pickBalls"><p>选择下方条件后，这里会显示号码</p></div>
+        <div class="assistant-actions"><button id="clearPick">清空</button><button class="primary" id="copyPick">复制结果</button></div>
+      </div>
+      <div class="compound-entry-wrap"><button class="compound-entry" id="compoundEntry"><span><b>复式组合</b><small>直接点选号码 · 自动生成全部组合</small></span><em id="compoundEntryState">立即使用 ›</em></button></div>
+      <div class="mode-switch" id="modeSwitch"><button class="active" data-pick-mode="pick">选码 · 条件交集</button><button data-pick-mode="kill">杀码 · 排除条件</button></div>
+      <div class="filter-tabs" id="filterTabs"></div>
+      <div class="filter-panel" id="filterPanel"><p><span id="filterHint">单双、大小与合数</span><small>不同类组合 · 同类可多选</small></p><div class="filter-options" id="filterOptions"></div></div>
+      <div class="compound-panel" id="compoundPanel" hidden>
+        <div class="compound-title"><div><strong>复式组合计算</strong><small>直接点选号码，再选择每组数量</small></div><b><span id="compoundCount">0</span> 个已选</b></div>
+        <div class="compound-tools"><button data-compound-tool="all">全选</button><button data-compound-tool="invert">反选</button><button data-compound-tool="clear">清空</button><button data-compound-tool="import">导入上方选号</button></div>
+        <div class="compound-number-grid" id="compoundGrid" aria-label="复式号码选择"></div>
+        <label>每组取几个号码</label>
+        <div class="compound-size" id="compoundSize"></div>
+        <div class="compound-summary"><span id="compoundSummaryText">0 个号码选 2 个</span><strong><span id="compoundTotal">0</span> <small>组</small></strong><p id="compoundFormula">C(0, 2) = 0</p></div>
+        <div class="compound-actions"><button id="clearCompound">清空</button><button class="primary" id="generateCompound">生成全部组合</button></div>
+        <div class="compound-results" id="compoundResults" hidden><div><strong id="compoundResultTitle">组合明细</strong><button id="copyCompound">复制全部</button></div><ol id="compoundList"></ol></div>
+      </div>
+      <p class="assistant-note">号码属性按 2026 年生肖及标准红蓝绿波色计算 · 仅供参考</p>
+    </section>
+  </div>
+
+  <script src="wuqi-snapshot.js"></script>
+  <script src="content-snapshot.js"></script>
+  <script src="expert-catalog.js?v=2"></script>
+  <script>
+    const draws = {
+      '澳门': { name: '澳门六合彩', issue: '2026228', nums: [38,26,8,6,29,18,23], zodiac: ['蛇','蛇','猪','牛','虎','牛','猴'], colors:['green','blue','red','green','red','red','red'] },
+      '香港': { name: '香港六合彩', issue: '2026089', nums: [33,27,16,28,4,25,14], zodiac: ['狗','龙','兔','兔','兔','马','蛇'], colors:['green','green','green','green','blue','blue','blue'] },
+      '疯狂天天彩': { name: '疯狂天天六合彩', issue: '2026228', nums: [7,9,35,42,13,17,25], zodiac: ['鼠','狗','猴','牛','马','虎','马'], colors:['red','blue','red','blue','red','green','blue'] }
+    };
+    const colors = ['red','green','red','green','blue','green','red'];
+    const drawLotteryIds={'澳门':5,'香港':6,'疯狂天天彩':11};
+    let paogouCurrentIssue='2026230',lingboCurrentIssue='2026229',hongkongCurrentIssue='2026090';
+    const paogouExternalUrl=issue=>{const value=String(issue),year=value.slice(0,4),period=String(Number(value.slice(4)));return `https://amtktp1.bxdlks.com/galleryfiles/system/xamlhc/big-pic/col/${year}/${period}/ampgt.jpg?t=${Date.now()}`};
+    const lingboExternalUrl=issue=>{const value=String(issue),year=value.slice(0,4),period=String(Number(value.slice(4)));return `https://amtktp1.bxdlks.com/galleryfiles/system/xamlhc/big-pic/col/${year}/${period}/lbwb.jpg?t=${Date.now()}`};
+    const hongkongExternalUrl=(issue,type)=>{const value=String(issue),year=value.slice(0,4),period=String(Number(value.slice(4))),file=type==='lingbo'?'lbwb.jpg':'p9.jpg';return `https://amtktp1.bxdlks.com/galleryfiles/system/xglhc/big-pic/col/${year}/${period}/${file}?t=${Date.now()}`};
+    const paogouIssues=()=>Array.from({length:3},(_,index)=>String(Number(paogouCurrentIssue)-index));
+    const lingboIssues=()=>Array.from({length:3},(_,index)=>String(Number(lingboCurrentIssue)-index));
+    const hongkongIssues=()=>Array.from({length:3},(_,index)=>String(Number(hongkongCurrentIssue)-index));
+    const paogouIssuesFor=(lottery,type)=>lottery==='香港'?hongkongIssues():(type==='lingbo'?lingboIssues():paogouIssues());
+    const paogouUrlFor=(lottery,type,issue)=>lottery==='香港'?hongkongExternalUrl(issue,type):(type==='lingbo'?lingboExternalUrl(issue):paogouExternalUrl(issue));
+    const faxMeta={
+      '澳门':{title:'澳门传真',system:'xamlhc',file:'ammh.jpg'},
+      '香港':{title:'马会传真',system:'xglhc',file:'zbmhcz.jpg'},
+      '疯狂天天彩':{title:'疯狂传真',system:'fklhc',file:'ammhf.jpg'}
+    };
+    const faxIssuesFor=lottery=>lottery==='香港'?hongkongIssues():paogouIssues();
+    const faxUrlFor=(lottery,issue)=>{const meta=faxMeta[lottery]||faxMeta['澳门'],value=String(issue),year=value.slice(0,4),period=String(Number(value.slice(4)));return `https://amtktp1.bxdlks.com/galleryfiles/system/${meta.system}/big-pic/col/${year}/${period}/${meta.file}?t=${Date.now()}`};
+    const sectionData = [
+      { title: '澳门马会【本周八码】', banner: null },
+      { title: '澳门马会【必开特头】', banner: ['orange', '精选资料 · 稳定更新', '专业数据分析'] },
+      { title: '澳门马会【家野出特】', banner: ['gold', '公式太准 · 数据有依据', '趋势研究'] },
+      { title: '天有晴 雨会停，您跟踪 必定赢', banner: ['green', '清爽资讯导航', '少广告 · 找资料'] },
+      { title: '澳门马会【三头爆特】', banner: ['purple', '澳门六合彩 · 公平公开', '全天数据直播'] },
+      { title: '澳门马会「必中波色」值得信赖', banner: null },
+      { title: '澳门马会「绝杀专区」帮你省钱', banner: ['gold', '资料太多不知道看哪个？', '精选论坛'] },
+      { title: '澳门马会「必中特码诗」精华版', banner: null },
+      { title: '澳门马会「超准10码」长跟必赚！', banner: ['gold', '六合有好料 · 马经早知道', '每日更新'] }
+    ];
+    const rows = [
+      ['2026227', '虎・猴・蛇・马・兔', '17 虎'],
+      ['2026226', '牛・鼠・蛇・猴・马', '28 兔'],
+      ['2026225', '龙・鸡・羊・猪・狗', '06 鼠']
+    ];
+    let fiveRows = [
+      {issue:'2026222-2026228',numbers:[3,6,7,23,27,30,36,37],result:'准二期'},
+      {issue:'2026215-2026221',numbers:[5,12,18,26,31,39,42,48],result:'准一期'},
+      {issue:'2026208-2026214',numbers:[1,9,16,22,28,34,41,47],result:'准三期'}
+    ];
+    let fourRows = [
+      {issue:'2026225-2026229',numbers:[30,31,32,33,34,35,36,37,38,39],result:'准一期|38'},
+      {issue:'2026220-2026224',numbers:[10,11,12,13,14,15,16,17,18,19],result:'准一期'},
+      {issue:'2026215-2026219',numbers:[20,21,22,23,24,25,26,27,28,29],result:'准三期'}
+    ];
+    let tailRows = [
+      {issue:'2026221',content:'家禽+虎猴',result:'开马01准'}
+    ];
+    const strategyGroups = [
+      {key:'main',label:'主攻',numbers:[2,3,7,8,15,16,18,19]},
+      {key:'assist',label:'协防',numbers:[21,22,23,26,29,31,33,34]},
+      {key:'reserve',label:'策防',numbers:[35,36,38,39,44,45,46,47]}
+    ];
+    let strategyHistory = [{issue:'2026230',heads:[1,2,3],result:''}];
+    let waveRows=[
+      {issue:'2026227',waves:['红波','绿波'],result:'17 红波'},
+      {issue:'2026226',waves:['蓝波','绿波'],result:'28 绿波'},
+      {issue:'2026225',waves:['红波','蓝波'],result:'06 绿波'},
+      {issue:'2026224',waves:['红波','绿波'],result:'09 蓝波'},
+      {issue:'2026223',waves:['蓝波','绿波'],result:'23 红波'}
+    ];
+    let killRows=[
+      {issue:'2026227',zodiac:'兔',head:6,wave:'红波',tail:4,result:{number:17,zodiac:'虎',wave:'红波'}},
+      {issue:'2026226',zodiac:'猴',head:2,wave:'蓝波',tail:8,result:{number:28,zodiac:'兔',wave:'绿波'}},
+      {issue:'2026225',zodiac:'鼠',head:3,wave:'绿波',tail:1,result:{number:6,zodiac:'鼠',wave:'绿波'}},
+      {issue:'2026224',zodiac:'鸡',head:4,wave:'红波',tail:9,result:{number:9,zodiac:'狗',wave:'蓝波'}},
+      {issue:'2026223',zodiac:'龙',head:1,wave:'蓝波',tail:5,result:{number:23,zodiac:'猴',wave:'红波'}}
+    ];
+    let poemRows=[
+      {issue:'2026227',poem:'龙腾虎跃迎金兔，马到猴来伴玉蛇',zodiacs:['龙','虎','兔','马','猴','蛇'],result:'虎'},
+      {issue:'2026226',poem:'金鸡报晓狗守门，牛耕羊牧猪鼠来',zodiacs:['鸡','狗','牛','羊','猪','鼠'],result:'兔'},
+      {issue:'2026225',poem:'鼠探春风牛踏野，虎追玉兔过龙蛇',zodiacs:['鼠','牛','虎','兔','龙','蛇'],result:'鼠'},
+      {issue:'2026224',poem:'马驰羊径猴攀树，鸡鸣狗吠猪归栏',zodiacs:['马','羊','猴','鸡','狗','猪'],result:'狗'},
+      {issue:'2026223',poem:'龙马精神猴献瑞，狗守虎门牛送春',zodiacs:['龙','马','猴','狗','虎','牛'],result:'猴'}
+    ];
+    let tenRows=[
+      {issue:'2026227',numbers:[1,5,9,12,17,23,29,34,41,47],result:'17 虎'},
+      {issue:'2026226',numbers:[3,7,11,16,22,28,31,38,44,49],result:'28 兔'},
+      {issue:'2026225',numbers:[2,6,10,15,19,25,30,36,42,48],result:'06 鼠'},
+      {issue:'2026224',numbers:[4,8,13,18,24,27,33,37,43,46],result:'09 狗'},
+      {issue:'2026223',numbers:[5,11,14,20,23,26,32,35,40,45],result:'23 猴'}
+    ];
+    let fourZodiacRows=[{issue:'2026230',content:'⑧码:00 00 00 00 00 00 00 00|③肖:|⑤肖:|⑦肖:|⑨肖:',result:''}];
+    const expertSlogans={'降龙十八掌':'实力精选','独孤九剑':'经典好料','六脉神剑':'笑傲六合','九阳神功':'感动世界','九阴真经':'绝对精品','乾坤大挪移':'势在必得','黯然销魂掌':'帮扶彩民','太极剑法':'最有实力','打狗棒法':'让你稳赚','凌波微步':'助你大发','一阳指':'经典之作','蛤蟆功':'梦想好料','弹指神通':'发财之道','玉女心经':'王牌资料','左右互搏':'彩民见证','北冥神功':'连续公开','吸星大法':'期期验证','易筋经':'精彩献上','洗髓经':'高手资料','金刚不坏':'跟者稳赚','龙象般若功':'长期发表','七伤拳':'实力高手','寒冰绵掌':'势在必得','玄冥神掌':'原创提供','落英神剑掌':'翻身致富','兰花拂穴手':'精品资料','碧海潮生曲':'稳赢资料','天山六阳掌':'稳定中奖','天山折梅手':'富豪之梦','小无相功':'繁荣富强'};
+    let expertData = [
+      ['东叔茶话','平特一肖','龙','平特一肖',8],['桥头阿伯','平特二肖','龙 猴','平特',7],['老钟秘笈','平特三肖','虎 马 羊','平特',7],['富贵人家','平特一肖','龙 猴 狗 虎 马 牛','平特一肖',6],
+      ['白小姐','平特一肖','狗','平特',6],['金牌八码','五期八码','01 07 16 23','号码',6],['南门老李','平特二肖','牛 狗','平特',6],['鸿运阿成','平特尾数','0尾 5尾','尾数',6],
+      ['九记快报','二中二','12 28 35 46','号码',6],['长乐坊','三中三','08 19 27 41','号码',5],['顺景楼','成语解肖','龙腾虎跃','解肖',5],['福来小站','绝杀三肖','鼠 牛 猪','杀肖',5],
+      ['大胜参考','波色参考','红波 蓝波','波色',5],['马会精选','平特一肖','马','平特',5],['财神资料','平特一肖','兔 蛇 牛 羊 狗 猴','平特一肖',5],['雷锋论坛','五肖五码','虎 猴 蛇 马 兔','综合',5],
+      ['金玉堂','特码诗','金鳞岂是池中物','诗句',5],['稳中高手','四码组合','04 12 17 30','号码',5],['阿海手札','家野六肖','牛 马 羊 鸡 狗 猪','六肖',4],['德叔笔记','生肖八码','龙 虎 马 猴','生肖',4],
+      ['春风茶馆','平特三肖','猴 鸡 狗','平特',4],['好运常来','单双大小','单 · 大','属性',4],['九龙精选','平特六码','02 11 18 29 37 46','号码',4],['六合笔记','绝杀三尾','2尾 6尾 9尾','尾数',4]
+    ].map((x,i)=>({author:x[0],category:x[1],pick:x[2],group:x[3],hits:x[4],rank:i+1}));
+    expertData=window.MAHUI_EXPERT_CATALOG||expertData;
+    let expertPage=1;
+    const wuqiFallback = [
+      ['2026231','05,12,16,21,22,25,29,47',null,null,'08-19'],['2026230','05,12,16,21,22,25,29,47',null,null,'08-18'],['2026229','05,12,16,21,22,25,29,47',null,null,'08-17'],['2026228','05,12,16,21,22,25,29,47','23','猴','08-16'],['2026227','05,12,16,21,22,25,29,47','16','兔','08-15'],
+      ['2026226','14,17,18,25,26,27,29,35','17','虎','08-14'],['2026225','14,17,18,25,26,27,29,35','01','马','08-13'],['2026224','14,17,18,25,26,27,29,35','09','狗','08-12'],['2026223','14,17,18,25,26,27,29,35','23','猴','08-11'],['2026222','14,17,18,25,26,27,29,35','26','蛇','08-10'],
+      ['2026221','13,23,25,30,31,37,39,40','01','马','08-09'],['2026220','13,23,25,30,31,37,39,40','48','羊','08-08'],['2026219','13,23,25,30,31,37,39,40','43','鼠','08-07'],['2026218','13,23,25,30,31,37,39,40','17','虎','08-06'],['2026217','13,23,25,30,31,37,39,40','26','蛇','08-05']
+    ].map((x,i)=>({id:265-i,issueNo:x[0],haoma:x[1],tema:x[2],temashengxiao:x[3],kjtime:x[4]}));
+    let wuqiGroups=[],wuqiGroupIndex=0,wuqiLottery='澳门',wuqiRequestId=0;
+    const wuqiCache={};
+    const wuqiTypes={'澳门':'xam','香港':'xg','疯狂天天彩':'tt'};
+    function renderWuqi(){
+      const group=wuqiGroups[wuqiGroupIndex]||[];
+      document.querySelector('#wuqiGrid').innerHTML=group.map(record=>{const nums=String(record.haoma||'').split(',').filter(Boolean);const hit=record.tema&&nums.includes(record.tema);return `<div class="wuqi-row"><strong class="wuqi-issue">${String(record.issueNo).slice(-3)}期<small>${record.kjtime||''}</small></strong><div class="wuqi-numline">${nums.map(n=>`<span class="wuqi-num ${record.tema===n?'hit':''}">${String(n).padStart(2,'0')}</span>`).join('')}</div><b class="wuqi-result ${record.tema?(hit?'win':'lose'):'pending'}">${record.tema?(hit?'中特':'未中'):'待开奖'}${record.tema?`<small>${record.tema} ${record.temashengxiao||''}</small>`:''}</b></div>`}).join('');
+      document.querySelector('#wuqiPeriods').innerHTML=wuqiGroups.map((g,i)=>{const a=String(g[0].issueNo).slice(-3),b=String(g[g.length-1].issueNo).slice(-3);return `<button class="${i===wuqiGroupIndex?'active':''}" data-wuqi-group="${i}">${a}–${b}期</button>`}).join('');
+      document.querySelector('#wuqiPrev').disabled=wuqiGroupIndex===0; document.querySelector('#wuqiNext').disabled=wuqiGroupIndex===wuqiGroups.length-1;
+      document.querySelector('#wuqiPeriods .active')?.scrollIntoView({block:'nearest',inline:'center'});
+    }
+    async function loadWuqi(name){
+      wuqiLottery=name;wuqiGroupIndex=0;const requestId=++wuqiRequestId;document.querySelector('#wuqiSubtitle').textContent=`${name.replace('疯狂天天彩','天天')} · 每五期一组 · 接口实时同步`;document.querySelector('#wuqiState').hidden=false;document.querySelector('#wuqiState').textContent='正在载入全部五期必中数据…';document.querySelector('#wuqiGrid').hidden=true;document.querySelector('#wuqiHistory').hidden=true;
+      let data=wuqiCache[name]||[];
+      if(!data.length){for(const request of [{url:`wuqi-data.php?type=${wuqiTypes[name]}&page=1&limit=500`,options:{cache:'no-store'}},{url:'https://lhw.235-from.com/index/wuqiapi/getwuqibizhong',options:{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({type:wuqiTypes[name],page:'1',limit:'500'})}}]){try{const response=await fetch(request.url,request.options);const payload=await response.json();if(payload.status!==0||!Array.isArray(payload.data))throw new Error();data=payload.data;break}catch(_){}}}
+      if(!data.length)data=window.WUQI_SNAPSHOT?.[wuqiTypes[name]]||wuqiFallback;
+      data=[...data].sort((a,b)=>Number(b.issueNo)-Number(a.issueNo));wuqiCache[name]=data;
+      if(requestId!==wuqiRequestId||wuqiLottery!==name)return;wuqiGroups=[];for(let i=0;i<data.length;i+=5)wuqiGroups.push(data.slice(i,i+5));document.querySelector('#wuqiSubtitle').textContent=`${name.replace('疯狂天天彩','天天')} · 每五期一组 · 共 ${data.length} 期`;document.querySelector('#wuqiState').hidden=true;document.querySelector('#wuqiGrid').hidden=false;document.querySelector('#wuqiHistory').hidden=false;renderWuqi();
+    }
+    const pickAllNumbers = Array.from({length:49},(_,i)=>i+1);
+    const redNumbers = new Set([1,2,7,8,12,13,18,19,23,24,29,30,34,35,40,45,46]);
+    const blueNumbers = new Set([3,4,9,10,14,15,20,25,26,31,36,37,41,42,47,48]);
+    const zodiacOrder = ['马','蛇','龙','兔','虎','牛','鼠','猪','狗','鸡','猴','羊'];
+    const numberZodiac = n => zodiacOrder[(n-1)%12];
+    const digitSum = n => Math.floor(n/10)+n%10;
+    const inZodiacs = values => n => values.includes(numberZodiac(n));
+    const numberSet = values => {const set=new Set(values);return n=>set.has(n)};
+    const elementNumbers={金:[4,5,12,13,26,27,34,35,42,43],木:[8,9,16,17,24,25,38,39,46,47],水:[1,14,15,22,23,30,31,44,45],火:[2,3,10,11,18,19,32,33,40,41,48,49],土:[6,7,20,21,28,29,36,37]};
+    const positionNumbers={楼上码:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,25,26,27,28],前落码:[1,2,3,4,5,6,7,8,17,18,19,20,21,22,23,24,33,34,35,36,37,38,39,40],左边码:[1,2,3,4,8,9,10,11,15,16,17,18,22,23,24,29,30,31,36,37,38,43,44,45],内围码:[9,10,11,12,13,16,17,18,19,20,23,24,25,26,27,30,31,32,33,34,37,38,39,40,41],中数:Array.from({length:25},(_,i)=>i+13),楼下码:[22,23,24,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49],后落码:[9,10,11,12,13,14,15,16,25,26,27,28,29,30,31,32,41,42,43,44,45,46,47,48,49],右边码:[5,6,7,12,13,14,19,20,21,25,26,27,28,32,33,34,35,39,40,41,42,46,47,48,49],外围码:[1,2,3,4,5,6,7,8,14,15,21,22,28,29,35,36,42,43,44,45,46,47,48,49],边数:[1,2,3,4,5,6,7,8,9,10,11,12,38,39,40,41,42,43,44,45,46,47,48,49]};
+    const pickGroups = [
+      {name:'常用',hint:'单双、大小与合数',options:[['odd','单',n=>n%2===1],['even','双',n=>n%2===0],['big','大',n=>n>=25],['small','小',n=>n<=24],['sum-odd','合单',n=>digitSum(n)%2===1],['sum-even','合双',n=>digitSum(n)%2===0],['tail-big','尾大',n=>n%10>=5],['tail-small','尾小',n=>n%10<=4]]},
+      {name:'号码',hint:'直接点选 01–49，可与其他条件组合',options:pickAllNumbers.map(n=>['number-'+n,String(n).padStart(2,'0'),value=>value===n])},
+      {name:'波色',hint:'红、蓝、绿波组合',options:[['red','红波',n=>redNumbers.has(n)],['blue','蓝波',n=>blueNumbers.has(n)],['green','绿波',n=>!redNumbers.has(n)&&!blueNumbers.has(n)],['red-odd','红单',n=>redNumbers.has(n)&&n%2===1],['red-even','红双',n=>redNumbers.has(n)&&n%2===0],['blue-odd','蓝单',n=>blueNumbers.has(n)&&n%2===1],['blue-even','蓝双',n=>blueNumbers.has(n)&&n%2===0]]},
+      {name:'生肖',hint:'2026年生肖号码',options:zodiacOrder.map(x=>['zodiac-'+x,x,n=>numberZodiac(n)===x])},
+      {name:'尾头',hint:'尾数与头数筛选',options:[...Array.from({length:10},(_,x)=>['tail-'+x,x+'尾',n=>n%10===x]),...Array.from({length:5},(_,x)=>['head-'+x,x+'头',n=>Math.floor(n/10)===x])]},
+      {name:'五行',hint:'金木水火土号码',options:Object.entries(elementNumbers).map(([name,values])=>['element-'+name,name,numberSet(values)])},
+      {name:'波单',hint:'波色与单双组合',options:[['red-odd-2','红单',n=>redNumbers.has(n)&&n%2===1],['red-even-2','红双',n=>redNumbers.has(n)&&n%2===0],['blue-odd-2','蓝单',n=>blueNumbers.has(n)&&n%2===1],['blue-even-2','蓝双',n=>blueNumbers.has(n)&&n%2===0],['green-odd','绿单',n=>!redNumbers.has(n)&&!blueNumbers.has(n)&&n%2===1],['green-even','绿双',n=>!redNumbers.has(n)&&!blueNumbers.has(n)&&n%2===0]]},
+      {name:'家野',hint:'家禽与野兽生肖',options:[['domestic','家禽',inZodiacs(['牛','马','羊','鸡','狗','猪'])],['wild','野兽',inZodiacs(['鼠','虎','兔','龙','蛇','猴'])]]},
+      {name:'肖类',hint:'天地、左右、前后与阴阳肖',options:[['sky','天肖',inZodiacs(['马','龙','兔','牛','猪','猴'])],['earth','地肖',inZodiacs(['蛇','虎','鼠','羊','鸡','狗'])],['left-z','左肖',inZodiacs(['蛇','龙','牛','鼠','鸡','猴'])],['right-z','右肖',inZodiacs(['马','兔','虎','羊','狗','猪'])],['front-z','前肖',inZodiacs(['鼠','牛','虎','兔','龙','蛇'])],['back-z','后肖',inZodiacs(['马','羊','猴','鸡','狗','猪'])],['yin-z','阴肖',inZodiacs(['马','蛇','龙','鼠','猪','狗'])],['yang-z','阳肖',inZodiacs(['兔','虎','牛','羊','猴','鸡'])],['solo-z','独自肖',inZodiacs(['马','兔','虎','牛','鼠','羊'])],['joint-z','合字肖',inZodiacs(['蛇','龙','猪','狗','鸡','猴'])]]},
+      {name:'门数',hint:'号码分为五门',options:[['door-1','1门',n=>n<=9],['door-2','2门',n=>n>=10&&n<=18],['door-3','3门',n=>n>=19&&n<=27],['door-4','4门',n=>n>=28&&n<=37],['door-5','5门',n=>n>=38]]},
+      {name:'段合',hint:'七段与精确合数',options:[...Array.from({length:7},(_,x)=>['section-'+x,(x+1)+'段',n=>n>=x*7+1&&n<=Math.min(49,(x+1)*7)]),...Array.from({length:13},(_,x)=>['sum-'+x,(x+1)+'合',n=>digitSum(n)===x+1])]},
+      {name:'合尾',hint:'号码合数的尾数',options:Array.from({length:10},(_,x)=>['sum-tail-'+x,x+'合尾',n=>digitSum(n)%10===x])},
+      {name:'头单双',hint:'头数与号码单双组合',options:[...Array.from({length:5},(_,x)=>['head-odd-'+x,x+'头单',n=>Math.floor(n/10)===x&&n%2===1]),...Array.from({length:5},(_,x)=>['head-even-'+x,x+'头双',n=>Math.floor(n/10)===x&&n%2===0])]},
+      {name:'余数',hint:'按3、4、5、6、7取余',options:[3,4,5,6,7].flatMap(divisor=>Array.from({length:divisor},(_,remainder)=>['mod-'+divisor+'-'+remainder,divisor+'余'+remainder,n=>n%divisor===remainder]))},
+      {name:'方位',hint:'楼上楼下、内外围与左右',options:Object.entries(positionNumbers).map(([name,values])=>['position-'+name,name,numberSet(values)])}
+    ];
+    let pickCategory='常用',pickMode='pick',selectedPick=new Set(),compoundSelected=new Set(),compoundPickSize=2,compoundGenerated=[];
+    const pickColor=n=>redNumbers.has(n)?'red':blueNumbers.has(n)?'blue':'green';
+    const allFilters=()=>pickGroups.flatMap(g=>g.options);
+    function combinationCount(total,size){if(size<1||size>total)return 0;let count=1;for(let i=1;i<=Math.min(size,total-size);i++)count=count*(total-i+1)/i;return Math.round(count)}
+    function renderCompound(){
+      document.querySelector('#compoundCount').textContent=compoundSelected.size;
+      document.querySelector('#compoundEntryState').textContent=compoundSelected.size?`${compoundSelected.size} 个已选 ›`:'立即使用 ›';
+      document.querySelector('#compoundGrid').innerHTML=pickAllNumbers.map(n=>`<button class="compound-number ${pickColor(n)} ${compoundSelected.has(n)?'selected':''}" data-compound-number="${n}">${String(n).padStart(2,'0')}</button>`).join('');
+      document.querySelector('#compoundSize').innerHTML=[2,3,4,5,6].map(n=>`<button class="${compoundPickSize===n?'selected':''}" data-compound-size="${n}">${n}码</button>`).join('');
+      const total=combinationCount(compoundSelected.size,compoundPickSize);
+      document.querySelector('#compoundSummaryText').textContent=`${compoundSelected.size} 个号码选 ${compoundPickSize} 个`;
+      document.querySelector('#compoundTotal').textContent=total.toLocaleString(); document.querySelector('#compoundFormula').textContent=`C(${compoundSelected.size}, ${compoundPickSize}) = ${total.toLocaleString()}`;
+    }
+    function buildCombinations(numbers,size){const out=[];function walk(start,current){if(current.length===size){out.push([...current]);return}for(let i=start;i<=numbers.length-(size-current.length);i++){current.push(numbers[i]);walk(i+1,current);current.pop()}}walk(0,[]);return out}
+    function currentPicked(){const groups=pickGroups.map(group=>group.options.filter(x=>selectedPick.has(x[0]))).filter(options=>options.length);if(!groups.length)return[];const matched=pickAllNumbers.filter(n=>groups.every(options=>options.some(x=>x[2](n))));return pickMode==='pick'?matched:pickAllNumbers.filter(n=>!matched.includes(n));}
+    function renderPick(){
+      document.querySelectorAll('[data-pick-mode]').forEach(b=>b.classList.toggle('active',b.dataset.pickMode===pickMode));
+      document.querySelector('#pickResultTitle').textContent=pickMode==='pick'?'选号结果':'排除后号码';
+      document.querySelector('#filterTabs').innerHTML=pickGroups.map(g=>`<button class="${g.name===pickCategory?'active':''}" data-pick-tab="${g.name}">${g.name}</button>`).join('');
+      const isCompound=pickCategory==='复式'; document.querySelector('#modeSwitch').hidden=isCompound; document.querySelector('#filterPanel').hidden=isCompound; document.querySelector('#compoundPanel').hidden=!isCompound;
+      document.querySelector('#compoundEntry').classList.toggle('active',isCompound); document.querySelector('#compoundEntryState').textContent=compoundSelected.size?`${compoundSelected.size} 个已选 ›`:'立即使用 ›';
+      document.querySelector('#filterPanel').classList.toggle('number-mode',pickCategory==='号码');
+      if(!isCompound){const group=pickGroups.find(g=>g.name===pickCategory); document.querySelector('#filterHint').textContent=group.hint;document.querySelector('#filterOptions').innerHTML=group.options.map(o=>`<button class="${pickCategory==='号码'?pickColor(Number(o[1])):''} ${selectedPick.has(o[0])?'selected':''}" data-pick-filter="${o[0]}">${o[1]}</button>`).join('')}else renderCompound();
+      const filters=allFilters().filter(x=>selectedPick.has(x[0]));
+      document.querySelector('#pickConditions').innerHTML=filters.length?`<small>已选条件</small>${filters.map(x=>`<span>${x[1]}</span>`).join('')}`:'';
+      const nums=currentPicked(),balls=document.querySelector('#pickBalls'); document.querySelector('#pickCount').textContent=nums.length;
+      balls.classList.toggle('empty',!nums.length); balls.innerHTML=nums.length?nums.map(n=>`<span class="${pickColor(n)}">${String(n).padStart(2,'0')}</span>`).join(''):`<p>${filters.length?'这些条件没有共同号码，请取消一个条件':'选择下方条件后，这里会显示号码'}</p>`;
+    }
+
+    function renderBalls(key) {
+      const draw = draws[key];
+      document.querySelector('#issue').textContent = draw.issue;
+      document.querySelector('#lotteryName').textContent = draw.name;
+      document.querySelector('#balls').innerHTML = draw.nums.map((num, i) =>
+        `${i === 6 ? '<span class="plus">+</span>' : ''}<span class="draw-number${i === 6 ? ' special' : ''}${num==null?' waiting':''}"><span class="ball ${num==null?'waiting':((draw.colors||[])[i]||'')}">${num==null?'--':String(num).padStart(2,'0')}</span><small class="zodiac">${num==null?'等待':(draw.zodiac[i]||'')}</small></span>`
+      ).join('');
+    }
+    let drawRefreshTimer=0;
+    const drawRefreshPlans={};
+    function drawTime(value){const time=Date.parse(String(value||'').replace(' ','T')+'+08:00');return Number.isFinite(time)?time:0}
+    function scheduleDrawRefresh(name,data){
+      clearTimeout(drawRefreshTimer);const now=Date.now(),closeAt=drawTime(data?.nextCloseTime),drawAt=drawTime(data?.nextLotteryTime),plannedAt=closeAt||drawAt;
+      if(plannedAt)drawRefreshPlans[name]=plannedAt;
+      const target=drawRefreshPlans[name]||0,inDrawWindow=target&&now>=target&&now<target+60*60*1000,delay=inDrawWindow?5000:target>now?Math.max(5000,target-now):60000;
+      drawRefreshTimer=setTimeout(()=>{if(document.hidden){drawRefreshTimer=setTimeout(()=>scheduleDrawRefresh(name,null),60000);return}loadDraw(document.querySelector('.tab-btn.active')?.dataset.lottery||name)},Math.min(delay,2147483647));
+    }
+    async function loadDraw(name,manual=false){
+      const sync=document.querySelector('#drawSync');sync.textContent='正在同步开奖数据…';
+      try{
+        const response=await fetch(`draw-data.php?lottery=${drawLotteryIds[name]}&t=${Date.now()}`,{cache:'no-store'}),payload=await response.json(),data=payload.data;
+        if(payload.code!==0||!data||!Array.isArray(data.numberList))throw new Error();
+        const received=data.numberList.filter(item=>/^\d{1,2}$/.test(String(item.number))).slice(0,7),colorMap={1:'red',2:'blue',3:'green'},waitingForNext=Number(data.closeCount)===0&&data.nextLotteryIssueNo&&String(data.nextLotteryIssueNo)!==String(data.issueNo)&&Number(data.openCount||0)===0&&(received.length===0||received.length===7),list=waitingForNext?[]:received,displayIssue=waitingForNext?data.nextLotteryIssueNo:data.issueNo,slots=Array.from({length:7},(_,index)=>list[index]||null);
+        draws[name]={...draws[name],issue:displayIssue,nums:slots.map(item=>item?Number(item.number):null),zodiac:slots.map(item=>item?.shengXiao||'等待'),colors:slots.map(item=>item?(colorMap[item.color]||''):'')};
+        const galleryIssue=String(Number(data.issueNo)+(list.length>=7?1:0));if(name==='澳门'){paogouCurrentIssue=galleryIssue;lingboCurrentIssue=String(Number(galleryIssue)-1)}else if(name==='香港')hongkongCurrentIssue=galleryIssue;
+        if(document.querySelector('.tab-btn.active')?.dataset.lottery===name)renderBalls(name);
+        if(document.querySelector('.tab-btn.active')?.dataset.lottery===name){syncPaogouCard(name);syncFaxCard(name)}
+        const progress=waitingForNext?'开奖中 · 等待第一个号码':list.length<7?`开奖中 · 已开 ${list.length}/7`:'实时数据';
+        sync.textContent=`${progress} · ${new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'})} 更新`;
+        scheduleDrawRefresh(name,data);
+        if(manual)showToast('开奖数据已刷新');
+      }catch(_){sync.textContent='已显示本地最新数据 · 点击刷新重试';scheduleDrawRefresh(name,null);if(manual)showToast('实时接口暂不可用，已保留本地数据')}
+    }
+    function updateCountdown() {
+      const now = new Date();
+      const target = new Date(now); target.setHours(21, 30, 0, 0);
+      if (target <= now) target.setDate(target.getDate() + 1);
+      const seconds = Math.floor((target - now) / 1000);
+      const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      const m = String(Math.floor(seconds % 3600 / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      document.querySelector('#countdown').textContent = `${h}:${m}:${s}`;
+    }
+    function bannerMarkup(){return ''}
+    const defaultAdImages=['assets/ad-slot-gold.svg','assets/ad-slot-red.svg','assets/ad-slot-purple.svg'],sectionKeys=['five','four','tail','fourZodiac','strategy','wave','kill','poem','ten'];
+    let siteConfig={ads:defaultAdImages.map(image=>({image,link:'',enabled:true})),popupAd:{image:'',link:'',enabled:false},hiddenSections:[],interlinks:[]};
+    function installImageAds(){const root=document.querySelector('#sections'),topAd=document.querySelector('#topImageAd');root.querySelectorAll(':scope > .image-ad').forEach(ad=>ad.remove());root.querySelectorAll(':scope > .section-card[data-card]').forEach(card=>card.hidden=siteConfig.hiddenSections.includes(sectionKeys[Number(card.dataset.card)]));const paogou=root.querySelector('.paogou-card');if(paogou&&siteConfig.hiddenSections.includes('paogou'))paogou.hidden=true;const cards=[...root.querySelectorAll(':scope > .section-card')],enabledAds=siteConfig.ads.map((ad,index)=>({...ad,index})).filter(ad=>ad.enabled&&ad.image);if(!enabledAds.length){if(topAd)topAd.hidden=true;return}const mediaFor=ad=>{const image=`<img src="${ad.image}" alt="广告图片位置" loading="eager" decoding="async">`;return ad.link?`<a href="${ad.link}" target="_blank" rel="noreferrer">${image}</a>`:image};if(topAd){const ad=enabledAds[0];topAd.hidden=false;topAd.dataset.adStat=ad.index;topAd.innerHTML=mediaFor(ad)}cards.slice(0,-1).forEach((card,index)=>{const ad=enabledAds[index%enabledAds.length];card.insertAdjacentHTML('afterend',`<div class="image-ad" data-ad-stat="${ad.index}">${mediaFor(ad)}</div>`)})}
+    function renderInterlinks(){if(!siteConfig.interlinks?.length)return;const grid=document.querySelector('#interlinkGrid');grid.replaceChildren();siteConfig.interlinks.filter(item=>item.enabled!==false).forEach(item=>{const action=item.url==='action:pick',pending=item.url==='#',el=document.createElement(action||pending?'button':'a');el.className=`interlink-item${pending?' pending':''}`;el.dataset.interlinkStat=item.name;if(action){el.type='button';el.dataset.action='pick'}else if(pending){el.type='button';el.dataset.pendingSite=item.name}else{el.href=item.url;if(/^https?:\/\//i.test(item.url)){el.target='_blank';el.rel='noreferrer'}}const icon=document.createElement('span'),name=document.createElement('span');icon.className='interlink-icon';icon.textContent=item.icon||item.name.slice(0,1);name.textContent=item.name;el.append(icon,name);grid.append(el)})}
+    function trackClick(eventType,key){fetch('stats-data.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({eventType,key}),keepalive:true}).catch(()=>{})}
+    document.addEventListener('click',event=>{const ad=event.target.closest('.image-ad');if(ad)trackClick('ad',`广告位${Number(ad.dataset.adStat||0)+1}`);if(event.target.closest('#popupAdLink'))trackClick('ad','首页弹窗');const link=event.target.closest('#interlinkGrid .interlink-item');if(link)trackClick('interlink',link.dataset.interlinkStat||link.querySelector('span:last-child')?.textContent||'互联网站')},{capture:true});
+    function updatePopupAd(){const modal=document.querySelector('#promoModal'),image=document.querySelector('#popupAdImage'),link=document.querySelector('#popupAdLink'),ad=siteConfig.popupAd;if(!ad?.enabled||!ad.image){modal.hidden=true;modal.classList.add('hidden');return}image.src=ad.image;link.removeAttribute('href');link.removeAttribute('target');link.removeAttribute('rel');if(ad.link){link.href=ad.link;link.target='_blank';link.rel='noreferrer'}modal.hidden=false;requestAnimationFrame(()=>modal.classList.remove('hidden'))}
+    async function loadSiteConfig(){try{const data=await fetch(`site-config.php?t=${Date.now()}`,{cache:'no-store'}).then(response=>response.json());if(data.ok){const popup=data.popupAd?.image==='assets/ad-slot-gold.svg'?{...data.popupAd,image:'assets/popup-ad-placeholder.svg'}:data.popupAd;siteConfig={ads:data.ads?.length?data.ads:siteConfig.ads,popupAd:popup||siteConfig.popupAd,hiddenSections:data.hiddenSections||[],interlinks:data.interlinks||[]};document.querySelector('#wuqiPanel').hidden=siteConfig.hiddenSections.includes('wuqi');renderInterlinks();installImageAds();updatePopupAd();syncFaxCard(document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门')}}catch(_){updatePopupAd()}}
+    const pageSize=5;
+    const sectionMarkupForLottery=lottery=>sectionData.map((item,index)=>lottery==='香港'&&index===0?'':cardMarkup(item,index)).join('');
+    function pagerMarkup(kind,total,size=pageSize,itemName='页'){
+      const pages=Math.max(1,Math.ceil(total/size));
+      return `<div class="pager" data-pager-kind="${kind}" data-page-current="1" data-page-total="${pages}"><button data-page="prev" disabled>←上一${itemName}</button><span class="pager-status">1 / ${pages}</span><button data-page="next" ${pages===1?'disabled':''}>下一${itemName}→</button></div>`;
+    }
+    function cardMarkup(item, index) {
+      if(index===0) return `<section class="section-card five-card" data-card="${index}">
+        <div class="section-title"><span class="flower">✿</span>${item.title}</div>
+        <div class="five-data-body">${fiveRows.slice(0,pageSize).map(fiveRowMarkup).join('')}</div>
+        ${pagerMarkup('five',fiveRows.length)}
+      </section>`;
+      if(index===1) return `${bannerMarkup(item)}<section class="section-card four-card" data-card="${index}">
+        <div class="section-title"><span class="flower">✿</span>${item.title}</div>
+        <div class="four-data-body">${fourRows.slice(0,pageSize).map(fourRowMarkup).join('')}</div>
+        ${pagerMarkup('four',fourRows.length)}
+      </section><section class="recommend-panel"><div class="recommend-title">↓↓≌期期推荐⊙高手免费资料≌↓↓</div><div class="recommend-grid" id="expertGrid"></div><div class="expert-pager"><button id="expertPrev">上一页</button><span id="expertPage">1 / 1</span><button id="expertNext">下一页</button></div></section>`;
+      if(index===2) return `${bannerMarkup(item)}<section class="section-card tail-card" data-card="${index}">
+        <div class="section-title"><span class="flower">✿</span>${item.title}</div>
+        <div class="tail-data-body">${tailRows.slice(0,pageSize).map(tailRowMarkup).join('')}</div>
+        ${pagerMarkup('tail',tailRows.length)}
+      </section>`;
+      if(index===3) return `${bannerMarkup(item)}<section class="section-card four-zodiac-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="four-zodiac-body">${fourZodiacRows.slice(0,pageSize).map(fourZodiacRowMarkup).join('')}</div>${pagerMarkup('fourZodiac',fourZodiacRows.length)}</section>`;
+      if(index===4){const issues=paogouIssues(),lingbo=lingboIssues();return `${bannerMarkup(item)}<section class="section-card strategy-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="strategy-history-body">${strategyHistory.slice(0,pageSize).map(strategyRecordMarkup).join('')}</div>${pagerMarkup('strategy',strategyHistory.length,pageSize,'页')}</section><section class="section-card paogou-card"><div class="section-title"><span class="flower">✿</span>澳门马会『澳门跑狗图』</div><div class="paogou-tabs"><button class="active" data-paogou-tab="macau">澳门跑狗</button><button data-paogou-tab="lingbo">凌波微步专解</button></div><div class="paogou-periods">${issues.map((issue,i)=>`<button class="${i===0?'active':''}" data-paogou-period="${issue}">${Number(issue.slice(4))}期</button>`).join('')}</div><div class="paogou-view"><div class="paogou-meta"><b>第${issues[0]}期</b><small>外链实时更新</small></div><img class="paogou-image" data-paogou-image="macau" src="${paogouExternalUrl(issues[0])}" referrerpolicy="no-referrer" loading="lazy" alt="第${issues[0]}期澳门跑狗图"><img class="paogou-image" data-paogou-image="lingbo" src="${lingboExternalUrl(lingbo[0])}" referrerpolicy="no-referrer" loading="lazy" alt="第${lingbo[0]}期凌波微步专解" hidden></div></section>`}
+      if(index===5) return `${bannerMarkup(item)}<section class="section-card wave-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="wave-data-body">${waveRows.slice(0,pageSize).map(waveRowMarkup).join('')}</div>${pagerMarkup('wave',waveRows.length)}</section>`;
+      if(index===6) return `${bannerMarkup(item)}<section class="section-card kill-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="kill-data-body">${killRows.slice(0,pageSize).map(killRowMarkup).join('')}</div>${pagerMarkup('kill',killRows.length)}</section>`;
+      if(index===7) return `${bannerMarkup(item)}<section class="section-card poem-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="poem-data-body">${poemRows.slice(0,pageSize).map(poemRowMarkup).join('')}</div>${pagerMarkup('poem',poemRows.length)}</section>`;
+      if(index===8) return `${bannerMarkup(item)}<section class="section-card ten-card" data-card="${index}"><div class="section-title"><span class="flower">✿</span>${item.title}</div><div class="ten-data-body">${tenRows.slice(0,pageSize).map(tenRowMarkup).join('')}</div>${pagerMarkup('ten',tenRows.length)}</section>`;
+      return `${bannerMarkup(item)}<section class="section-card" data-card="${index}">
+        <div class="section-title"><span class="flower">✿</span>${item.title}</div>
+        <div class="table-head"><span>期号</span><span>推荐内容</span><span>开奖结果</span></div>
+        <div class="table-body">${rows.map(r => `<div class="table-row"><b>${r[0]}</b><span>${r[1]}</span><span class="result">${r[2]}</span></div>`).join('')}</div>
+      </section>`;
+    }
+    function applyLotteryMarks(lottery,scope=document){const config=lottery==='香港'?['港','lottery-hk']:lottery==='疯狂天天彩'?['彩','lottery-crazy']:['澳','lottery-macau'];scope.querySelectorAll('.section-title .flower').forEach(mark=>{const className=`flower ${config[1]}`;if(mark.textContent!==config[0])mark.textContent=config[0];if(mark.className!==className)mark.className=className})}
+    function syncPaogouCard(lottery){const interlinkTitle=document.querySelector('#interlinkTitle');if(interlinkTitle)interlinkTitle.textContent=`↓↓★★★${lottery}连准网站推荐★★★↓↓`;const fiveTitle=document.querySelector('.five-card .section-title');if(fiveTitle)fiveTitle.innerHTML=`<span class="flower">✿</span>${lottery}马会【本周八码】`;const fourTitle=document.querySelector('.four-card .section-title');if(fourTitle)fourTitle.innerHTML=`<span class="flower">✿</span>${lottery}马会【必开特头】`;const tailTitle=document.querySelector('.tail-card .section-title');if(tailTitle)tailTitle.innerHTML=`<span class="flower">✿</span>${lottery}马会【家野出特】`;const titles={4:`${lottery}马会【三头爆特】`,5:`${lottery}马会「必中波色」值得信赖`,6:`${lottery}马会「绝杀专区」帮你省钱`,7:`${lottery}马会「必中特码诗」精华版`,8:`${lottery}马会「超准10码」长跟必赚！`};Object.entries(titles).forEach(([index,text])=>{const el=document.querySelector(`[data-card="${index}"] .section-title`);if(el)el.innerHTML=`<span class="flower">✿</span>${text}`});const card=document.querySelector('.paogou-card');if(!card)return;card.hidden=lottery==='疯狂天天彩';if(card.hidden)return;card.dataset.paogouLottery=lottery;const title=card.querySelector('.section-title'),dogTab=card.querySelector('[data-paogou-tab="macau"]'),lingboTab=card.querySelector('[data-paogou-tab="lingbo"]');title.innerHTML=`<span class="flower">✿</span>${lottery}马会『${lottery}跑狗图』`;dogTab.textContent=`${lottery}跑狗`;dogTab.classList.add('active');lingboTab.classList.remove('active');card.querySelector('[data-paogou-image="macau"]').hidden=false;card.querySelector('[data-paogou-image="lingbo"]').hidden=true;const issues=paogouIssuesFor(lottery,'macau'),lingbo=paogouIssuesFor(lottery,'lingbo');card.querySelector('.paogou-periods').innerHTML=issues.map((issue,i)=>`<button class="${i===0?'active':''}" data-paogou-period="${issue}">${Number(issue.slice(4))}期</button>`).join('');card.querySelector('.paogou-meta b').textContent=`第${issues[0]}期`;card.querySelector('.paogou-meta small').textContent='外链实时更新';const dogImage=card.querySelector('[data-paogou-image="macau"]'),lingboImage=card.querySelector('[data-paogou-image="lingbo"]');dogImage.src=paogouUrlFor(lottery,'macau',issues[0]);dogImage.alt=`第${issues[0]}期${lottery}跑狗图`;lingboImage.src=paogouUrlFor(lottery,'lingbo',lingbo[0]);lingboImage.alt=`第${lingbo[0]}期${lottery}凌波微步专解`}
+    function syncFaxCard(lottery){const card=document.querySelector('.paogou-card');if(!card)return;const meta=faxMeta[lottery]||faxMeta['澳门'],issues=faxIssuesFor(lottery);card.hidden=siteConfig.hiddenSections.includes('paogou');card.dataset.paogouLottery=lottery;card.dataset.faxMode='1';card.querySelector('.paogou-tabs').style.display='none';card.querySelector('.section-title').innerHTML=`<span class="flower">✿</span>${lottery}马会『${meta.title}』`;card.querySelector('.paogou-periods').innerHTML=issues.map((issue,i)=>`<button class="${i===0?'active':''}" data-paogou-period="${issue}">${Number(issue.slice(4))}期</button>`).join('');card.querySelector('.paogou-meta b').textContent=`第${issues[0]}期`;card.querySelector('.paogou-meta small').textContent=meta.title+' · 自动更新';const image=card.querySelector('[data-paogou-image="macau"]'),extra=card.querySelector('[data-paogou-image="lingbo"]');image.hidden=false;extra.hidden=true;image.src=faxUrlFor(lottery,issues[0]);image.alt=`第${issues[0]}期${meta.title}`;applyLotteryMarks(lottery,card)}
+    const lotteryMarkObserver=new MutationObserver(()=>applyLotteryMarks(document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门'));lotteryMarkObserver.observe(document.querySelector('#sections'),{childList:true,subtree:true});
+    function fiveRowMarkup(row) {
+      const parts=String(row.issue).split('-'),short=value=>String(value).slice(-3),range=parts.length===2?`${short(parts[0])}期-${short(parts[1])}期`:`${short(parts[0])}期`,resultParts=String(row.result||'准零期').split('|'),hitNumbers=new Set(managedNumbers(resultParts[1]||''));
+      return `<article class="five-row"><div class="five-row-head"><b>${range}</b><span>${resultParts[0]}</span></div><div class="five-pick-line"><small>八码</small><div class="number-picks">${row.numbers.map((n,i)=>`<span class="${colors[i%colors.length]} ${hitNumbers.has(n)?'hit':''}">${String(n).padStart(2,'0')}</span>`).join('')}</div></div></article>`;
+    }
+    function fourRowMarkup(row) {
+      const parts=String(row.issue).split('-'),short=value=>String(value).slice(-3),range=parts.length===2?`${short(parts[0])}期-${short(parts[1])}期`:`${short(parts[0])}期`,rawResult=String(row.result||''),resultParts=rawResult.split('|'),legacyHits=/^开[：:]/.test(rawResult)?managedNumbers(rawResult).filter(n=>n>0):[],hitNumbers=new Set(legacyHits.length?legacyHits:managedNumbers(resultParts[1]||'')),hitCount=hitNumbers.size,resultText=legacyHits.length?`中${['零','一','二','三','四','五','六','七'][hitCount]||hitCount}期`:(resultParts[0]||'中零期');
+      return `<article class="four-row"><b class="four-issue">${range}</b><div class="four-numbers">${row.numbers.map(n=>`<span class="four-number ${hitNumbers.has(n)?'hit':''}">${String(n).padStart(2,'0')}</span>`).join('')}</div><span class="four-result">${resultText}</span></article>`;
+    }
+    function tailRowMarkup(row){
+      const content=String(row.content||'家禽+虎猴'),result=String(row.result||''),match=result.match(/^开([鼠牛虎兔龙蛇马羊猴鸡狗猪])(\d{1,2})(准|错)$/),hit=match?.[3]==='准',drawZodiac=match?.[1]||'',domestic=['牛','马','羊','鸡','狗','猪'].includes(drawZodiac),parts=content.match(/^([^+]+)\+(.)(.)$/),period=String(Number(String(row.issue).slice(-3)));
+      const first=parts?.[1]||'家禽',second=parts?.[2]||'虎',third=parts?.[3]||'猴';
+      return `<article class="tail-row"><b class="tail-issue">${period}期</b><span class="tail-label">家野出特</span><span class="tail-bracket">【</span><span class="tail-pick ${hit&&domestic?'hit':''}">${first}</span><span>+</span><span class="tail-pick ${hit&&drawZodiac===second?'hit':''}">${second}</span><span class="tail-pick ${hit&&drawZodiac===third?'hit':''}">${third}</span><span class="tail-bracket">】</span><span class="tail-result ${result?(hit?'hit':''):'pending-label'}">${result||'待开奖'}</span></article>`;
+    }
+    function strategyRecordMarkup(record){
+      const result=String(record.result||''),openedHead=Number(result.match(/开(\d)头/)?.[1]),hit=result.endsWith('准'),period=Number(String(record.issue).slice(-3));
+      return `<article class="strategy-period"><div class="strategy-issue">${period}期<small>推荐期数</small></div><div class="strategy-numbers">${record.heads.map(head=>`<span class="strategy-number ${hit&&head===openedHead?'hit':''}">${head}<i>头</i></span>`).join('')}</div><span class="strategy-result ${result?(hit?'hit':''):'pending-label'}">${result||'待开奖'}</span></article>`;
+    }
+    function waveRowMarkup(row){
+      const pending=!row.result,resultWave=String(row.result).split(/\s+/).pop(),hit=!pending&&row.waves.includes(resultWave),colorOf=x=>x.includes('红')?'red':x.includes('蓝')?'blue':'green',period=Number(String(row.issue).slice(-3));
+      return `<article class="wave-row"><b class="wave-issue">${period}期</b><div class="wave-picks">${row.waves.map(x=>`<span class="wave-chip ${colorOf(x)} ${!pending&&x===resultWave?'hit':''}">${x}</span>`).join('')}</div><span class="wave-result ${pending?'pending-label':''}">${pending?'待开奖':`开${row.result}<b class="${hit?'':'miss'}">${hit?'命中':'未中'}</b>`}</span></article>`;
+    }
+    function killRowMarkup(row){
+      const pending=!row.result.number,failed={zodiac:!pending&&row.zodiac===row.result.zodiac,head:!pending&&row.head===Math.floor(row.result.number/10),wave:!pending&&row.wave===row.result.wave,tail:!pending&&row.tail===row.result.number%10},hasFailed=Object.values(failed).some(Boolean);
+      const item=(label,value,key)=>`<span class="kill-item ${failed[key]?'failed':''}"><small>${label}</small><b>${value}</b></span>`;
+      return `<article class="kill-row"><div class="kill-head"><b>${Number(String(row.issue).slice(-3))}期</b><span class="${pending?'pending-label':''}">${pending?'待开奖':`开${String(row.result.number).padStart(2,'0')} ${row.result.zodiac}<strong class="${hasFailed?'failed':''}">${hasFailed?'失误':'杀中'}</strong>`}</span></div><div class="kill-grid">${item('杀肖',row.zodiac,'zodiac')}${item('杀头',row.head+'头','head')}${item('杀波',row.wave,'wave')}${item('杀尾',row.tail+'尾','tail')}</div></article>`;
+    }
+    function poemRowMarkup(row){
+      const pending=!row.result,hit=!pending&&row.zodiacs.includes(row.result);
+      return `<article class="poem-row"><div class="poem-head"><b>${Number(String(row.issue).slice(-3))}期</b><span class="${pending?'pending-label':''}">${pending?'待开奖':`开${row.result}<strong class="${hit?'':'miss'}">${hit?'命中':'未中'}</strong>`}</span></div><div class="poem-text">${row.poem}</div><div class="poem-zodiacs">${row.zodiacs.map(x=>`<span class="${!pending&&x===row.result?'hit':''}">${x}</span>`).join('')}</div></article>`;
+    }
+    function tenRowMarkup(row){
+      const pending=!row.result,resultNumber=Number(String(row.result).match(/\d+/)?.[0]),hit=!pending&&row.numbers.includes(resultNumber);
+      return `<article class="ten-row"><div class="ten-head"><b>${Number(String(row.issue).slice(-3))}期</b><span class="${pending?'pending-label':''}">${pending?'待开奖':`开${row.result}<strong class="${hit?'':'miss'}">${hit?'命中':'未中'}</strong>`}</span></div><div class="ten-numbers">${row.numbers.map(n=>`<span class="ten-number ${!pending&&n===resultNumber?'hit':''}">${String(n).padStart(2,'0')}</span>`).join('')}</div></article>`;
+    }
+    function fourZodiacRowMarkup(row){
+      const period=Number(String(row.issue).slice(-3)),resultNumber=String(row.result||'').match(/\d+/)?.[0]||'00',resultZodiac=managedZodiacs(row.result)[0]||'',parts=String(row.content||'').split('|');
+      const opened=Boolean(row.result),drawText=opened?`开 ${String(resultNumber).padStart(2,'0')} ${resultZodiac}`:'待开奖';
+      return `<article class="four-zodiac-row"><div class="four-zodiac-result"><b>${period}期开奖结果</b><span class="${opened?'':'pending-label'}">${drawText}</span></div>${parts.map((part,index)=>{const [label,value='']=part.split(':'),values=index===0?(value.match(/\d+/g)||Array(8).fill('00')):(value.match(/[鼠牛虎兔龙蛇马羊猴鸡狗猪]/g)||[]),hit=opened&&(index===0?values.includes(resultNumber):values.includes(resultZodiac));return `<div class="four-zodiac-line"><b>${period}期:${label}</b><span class="four-zodiac-values ${hit?'hit':''}">${index===0?values.map(x=>String(x).padStart(2,'0')).join(' '):values.join(' ')}</span><em class="${opened?(hit?'hit':'miss'):''}">${opened?(hit?'命中':'未中'):'待开奖'}</em></div>`}).join('')}</article>`;
+    }
+    const managedNumbers=value=>(String(value).match(/\d+/g)||[]).map(Number),managedZodiacs=value=>String(value).match(/[鼠牛虎兔龙蛇马羊猴鸡狗猪]/g)||[];
+    let managedPayload=null;
+    function applyManagedContent(payload){
+      if(!payload||!Array.isArray(payload.records)||!payload.records.length)return;
+      managedPayload=payload;const lottery=document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门',group=section=>payload.records.filter(x=>x.section===section&&(x.lottery||'澳门')===lottery).sort((a,b)=>String(b.issue).localeCompare(String(a.issue)));
+      const five=group('five');fiveRows=five.map(x=>({issue:x.issue,numbers:managedNumbers(x.content).slice(0,8),result:x.result}));
+      const four=group('four');fourRows=four.map(x=>({issue:x.issue,numbers:managedNumbers(x.content).slice(0,10),result:x.result}));
+      const tails=group('tail');tailRows=tails.map(x=>({issue:x.issue,content:x.content,result:x.result}));
+      const fourZodiac=group('fourZodiac');fourZodiacRows=fourZodiac.map(x=>({issue:x.issue,content:x.content,result:x.result}));
+      const strategies=group('strategy');strategyHistory=strategies.map(x=>({issue:x.issue,heads:managedNumbers(x.content).slice(0,3),result:x.result}));
+      const waves=group('wave');waveRows=waves.map(x=>({issue:x.issue,waves:String(x.content).match(/[红蓝绿]波/g)||[],result:x.result}));
+      const kills=group('kill');killRows=kills.map(x=>({issue:x.issue,zodiac:x.content.match(/杀肖\s*([鼠牛虎兔龙蛇马羊猴鸡狗猪])/)?.[1]||'',head:Number(x.content.match(/杀头\s*(\d)/)?.[1]||0),wave:x.content.match(/杀波\s*([红蓝绿]波)/)?.[1]||'',tail:Number(x.content.match(/杀尾\s*(\d)/)?.[1]||0),result:{number:managedNumbers(x.result)[0]??null,zodiac:managedZodiacs(x.result)[0]||'',wave:x.result.match(/[红蓝绿]波/)?.[0]||''}}));
+      const poems=group('poem');poemRows=poems.map(x=>{const parts=String(x.content).split('|');return{issue:x.issue,poem:parts[0].trim(),zodiacs:managedZodiacs(parts[1]||'').slice(0,6),result:managedZodiacs(x.result)[0]||''}});
+      const tens=group('ten');tenRows=tens.map(x=>({issue:x.issue,numbers:managedNumbers(x.content).slice(0,10),result:x.result}));
+      const experts=group('expert'),authors=new Map();experts.forEach(x=>{const key=`${x.author}|${x.category}`;if(authors.has(key))return;const history=experts.filter(item=>item.author===x.author&&item.category===x.category),recent=history.filter(item=>item.status!=='pending').slice(0,8);authors.set(key,{author:x.author||'资料作者',category:x.category||'高手资料',issue:String(x.issue||'').slice(-3),pick:x.content,group:expertSlogans[x.author]||x.category||'资料',hits:recent.filter(item=>item.status==='hit').length,total:history.length,lottery})});expertData=[...authors.values()].map((x,index)=>({...x,rank:index+1}));const pendingIssue=experts.filter(x=>x.status==='pending').map(x=>String(x.issue)).sort((a,b)=>b.localeCompare(a))[0];if(pendingIssue){paogouCurrentIssue=pendingIssue;lingboCurrentIssue=String(Number(pendingIssue)-1)}
+      document.querySelector('#sections').innerHTML=sectionMarkupForLottery(lottery);if(lottery==='香港')document.querySelector('#sections .five-card')?.remove();installImageAds();expertPage=1;renderExperts();const activeLottery=document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门';syncPaogouCard(activeLottery);syncFaxCard(activeLottery);
+      document.querySelector('#expertPrev').onclick=()=>{if(expertPage>1){expertPage--;renderExperts()}};
+      document.querySelector('#expertNext').onclick=()=>{expertPage++;renderExperts()};
+    }
+    async function loadManagedContent(){
+      let payload=null;
+      try{const response=await fetch(`content-data.php?t=${Date.now()}`,{cache:'no-store'}),server=await response.json();if(server.records?.length)payload=server}catch(_){}
+      if(!payload?.records?.length){try{payload=JSON.parse(localStorage.getItem('paogou-managed-content-v1')||'null')}catch(_){}}
+      if(payload?.records?.length)applyManagedContent(payload);
+    }
+    function renderExperts(){
+      const pages=Math.max(1,Math.ceil(expertData.length/8));expertPage=Math.min(expertPage,pages);const items=expertData.slice((expertPage-1)*8,expertPage*8);
+      const lottery=document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门';document.querySelector('#expertGrid').innerHTML=items.map(x=>{const catalogIndex=window.MAHUI_EXPERT_CATALOG?.findIndex(item=>item.author===x.author&&item.category===x.category)??-1,href=catalogIndex>=0?`expert.html?id=${catalogIndex}&lottery=${encodeURIComponent(lottery)}`:`expert.html?author=${encodeURIComponent(x.author)}&category=${encodeURIComponent(x.category)}&lottery=${encodeURIComponent(lottery)}&slogan=${encodeURIComponent(x.group)}&pick=${encodeURIComponent(x.pick)}`;return `<a class="expert-card" href="${href}"><span class="expert-rank ${x.rank<=3?'top':''}">${x.rank}</span><div class="expert-head"><span class="expert-avatar">${[...x.author][0]}</span><div class="expert-author">${x.author}</div></div><div class="expert-category">【${x.category}】</div><div class="expert-meta"><span>第${x.issue||'230'}期 · 站内查看</span><b class="expert-source">免费公开</b></div></a>`}).join('');
+      document.querySelector('#expertPage').textContent=`${expertPage} / ${pages}`;document.querySelector('#expertPrev').disabled=expertPage===1;document.querySelector('#expertNext').disabled=expertPage===pages;
+    }
+    function showToast(message) {
+      const toast = document.querySelector('#toast'); toast.textContent = message; toast.classList.add('show');
+      clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+    document.querySelector('#sections').innerHTML = sectionData.map(cardMarkup).join('');installImageAds();syncPaogouCard('澳门');syncFaxCard('澳门');loadSiteConfig();
+    renderExperts();
+    renderBalls('澳门');
+    loadDraw('澳门');
+    loadWuqi('澳门');
+    updateCountdown(); setInterval(updateCountdown, 1000);
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');if(managedPayload)applyManagedContent(managedPayload);renderBalls(btn.dataset.lottery);syncPaogouCard(btn.dataset.lottery);syncFaxCard(btn.dataset.lottery); showToast(`已切换至${btn.dataset.lottery}`);
+      loadDraw(btn.dataset.lottery);
+      loadWuqi(btn.dataset.lottery);
+    }));
+    document.querySelector('#refreshDraw').onclick=()=>loadDraw(document.querySelector('.tab-btn.active').dataset.lottery,true);
+    document.querySelector('#wuqiPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-wuqi-group]');if(b){wuqiGroupIndex=Number(b.dataset.wuqiGroup);renderWuqi()}});
+    document.querySelector('#wuqiPrev').onclick=()=>{if(wuqiGroupIndex>0){wuqiGroupIndex--;renderWuqi()}};
+    document.querySelector('#wuqiNext').onclick=()=>{if(wuqiGroupIndex<wuqiGroups.length-1){wuqiGroupIndex++;renderWuqi()}};
+    document.querySelector('#expertPrev').onclick=()=>{if(expertPage>1){expertPage--;renderExperts()}};
+    document.querySelector('#expertNext').onclick=()=>{expertPage++;renderExperts()};
+    document.addEventListener('click', event => {
+      const pendingSite=event.target.closest('[data-pending-site]');if(pendingSite){showToast(`${pendingSite.dataset.pendingSite}网址待接入`);return}
+      const paogouTab=event.target.closest('[data-paogou-tab]');
+      if(paogouTab){
+        const card=paogouTab.closest('.paogou-card'),target=paogouTab.dataset.paogouTab;
+        card.querySelectorAll('[data-paogou-tab]').forEach(x=>x.classList.toggle('active',x===paogouTab));
+        card.querySelectorAll('[data-paogou-image]').forEach(x=>x.hidden=x.dataset.paogouImage!==target);
+        const lottery=card.dataset.paogouLottery||'澳门',issues=paogouIssuesFor(lottery,target);card.querySelector('.paogou-periods').innerHTML=issues.map((issue,i)=>`<button class="${i===0?'active':''}" data-paogou-period="${issue}">${Number(issue.slice(4))}期</button>`).join('');card.querySelector('.paogou-meta b').textContent=`第${issues[0]}期`;card.querySelector('.paogou-meta small').textContent='外链实时更新';const image=card.querySelector(`[data-paogou-image="${target}"]`);image.src=paogouUrlFor(lottery,target,issues[0]);image.alt=`第${issues[0]}期${lottery}${target==='macau'?'跑狗图':'凌波微步专解'}`;
+      }
+      const paogouPeriod=event.target.closest('[data-paogou-period]');
+      if(paogouPeriod){
+        const card=paogouPeriod.closest('.paogou-card'),issue=paogouPeriod.dataset.paogouPeriod;
+        card.querySelectorAll('[data-paogou-period]').forEach(x=>x.classList.toggle('active',x===paogouPeriod));
+        card.querySelector('.paogou-meta b').textContent=`第${issue}期`;
+        const lottery=card.dataset.paogouLottery||'澳门';
+        if(card.dataset.faxMode==='1'){
+          const meta=faxMeta[lottery]||faxMeta['澳门'],image=card.querySelector('[data-paogou-image="macau"]');
+          image.src=faxUrlFor(lottery,issue);image.alt=`第${issue}期${meta.title}`;card.querySelector('.paogou-meta small').textContent=meta.title+' · 自动更新';
+        }else{
+          const target=card.querySelector('[data-paogou-tab].active').dataset.paogouTab,image=card.querySelector(`[data-paogou-image="${target}"]`);image.src=paogouUrlFor(lottery,target,issue);image.alt=`第${issue}期${lottery}${target==='macau'?'跑狗图':'凌波微步专解'}`;
+        }
+      }
+      const page = event.target.closest('[data-page]');
+      if (page) {
+        const pager=page.closest('[data-pager-kind]'),total=Number(pager.dataset.pageTotal),oldPage=Number(pager.dataset.pageCurrent),cmd=page.dataset.page;
+        const current=cmd==='next'?Math.min(total,oldPage+1):Math.max(1,oldPage-1),kind=pager.dataset.pagerKind;
+        const configs={five:[fiveRows,fiveRowMarkup,pageSize],four:[fourRows,fourRowMarkup,pageSize],tail:[tailRows,tailRowMarkup,pageSize],fourZodiac:[fourZodiacRows,fourZodiacRowMarkup,pageSize],wave:[waveRows,waveRowMarkup,pageSize],kill:[killRows,killRowMarkup,pageSize],poem:[poemRows,poemRowMarkup,pageSize],ten:[tenRows,tenRowMarkup,pageSize],strategy:[strategyHistory,strategyRecordMarkup,pageSize]};
+        const [records,renderer,size]=configs[kind],start=(current-1)*size;
+        pager.previousElementSibling.innerHTML=records.slice(start,start+size).map(renderer).join('');
+        pager.dataset.pageCurrent=current;pager.querySelector('.pager-status').textContent=`${current} / ${total}`;
+        pager.querySelector('[data-page="prev"]').disabled=current===1;pager.querySelector('[data-page="next"]').disabled=current===total;
+      }
+      const action = event.target.closest('[data-action]')?.dataset.action;
+      if (action) {
+        if (action === 'pick') {
+          document.querySelector('#pickOverlay').removeAttribute('hidden');
+          renderPick();
+          return;
+        }
+        const panels = {
+          formula: {
+            title: '六合公式',
+            body: '<p class="utility-note">常用数据公式入口</p><div class="quick-grid"><div class="quick-item"><b>五行</b><small>属性对照</small></div><div class="quick-item"><b>合数</b><small>号码计算</small></div><div class="quick-item"><b>家野</b><small>生肖分类</small></div><div class="quick-item"><b>色波</b><small>波色对照</small></div></div>'
+          }
+        };
+        document.querySelector('#utilityTitle').textContent = panels[action].title;
+        document.querySelector('#utilityBody').innerHTML = panels[action].body;
+        document.querySelector('#utilityModal').classList.remove('hidden');
+      }
+    });
+    const modal = document.querySelector('#promoModal');
+    const hidePromo=()=>{modal.classList.add('hidden');modal.hidden=true};
+    document.querySelector('#closeModal').addEventListener('click',hidePromo);
+    document.querySelector('#popupAdLink').addEventListener('click', () => { if(siteConfig.popupAd?.link)hidePromo() });
+    modal.addEventListener('click', e => { if (e.target === modal)hidePromo() });
+    const utilityModal = document.querySelector('#utilityModal');
+    document.querySelector('#closeUtility').addEventListener('click', () => utilityModal.classList.add('hidden'));
+    utilityModal.addEventListener('click', e => { if (e.target === utilityModal) utilityModal.classList.add('hidden'); });
+    const pickOverlay=document.querySelector('#pickOverlay');
+    document.querySelector('#closePick').onclick=()=>pickOverlay.setAttribute('hidden','');
+    pickOverlay.addEventListener('click',e=>{if(e.target===pickOverlay)pickOverlay.setAttribute('hidden','')});
+    document.querySelector('#filterTabs').addEventListener('click',e=>{const b=e.target.closest('[data-pick-tab]');if(b){pickCategory=b.dataset.pickTab;renderPick()}});
+    document.querySelector('#compoundEntry').onclick=()=>{pickCategory='复式';renderPick()};
+    document.querySelector('#filterOptions').addEventListener('click',e=>{const b=e.target.closest('[data-pick-filter]');if(b){selectedPick.has(b.dataset.pickFilter)?selectedPick.delete(b.dataset.pickFilter):selectedPick.add(b.dataset.pickFilter);renderPick()}});
+    document.querySelectorAll('[data-pick-mode]').forEach(b=>b.onclick=()=>{pickMode=b.dataset.pickMode;renderPick()});
+    document.querySelector('#clearPick').onclick=()=>{selectedPick.clear();renderPick()};
+    document.querySelector('#copyPick').onclick=async()=>{const text=currentPicked().map(n=>String(n).padStart(2,'0')).join(' ');if(!text){showToast('请先选择条件');return}try{await navigator.clipboard.writeText(text);showToast('选号结果已复制')}catch(_){showToast('复制失败，请手动记录')}};
+    document.querySelector('#compoundGrid').addEventListener('click',e=>{const b=e.target.closest('[data-compound-number]');if(b){const n=Number(b.dataset.compoundNumber);compoundSelected.has(n)?compoundSelected.delete(n):compoundSelected.add(n);compoundGenerated=[];document.querySelector('#compoundResults').hidden=true;renderCompound()}});
+    document.querySelector('#compoundSize').addEventListener('click',e=>{const b=e.target.closest('[data-compound-size]');if(b){compoundPickSize=Number(b.dataset.compoundSize);compoundGenerated=[];document.querySelector('#compoundResults').hidden=true;renderCompound()}});
+    document.querySelector('.compound-tools').addEventListener('click',e=>{const tool=e.target.closest('[data-compound-tool]')?.dataset.compoundTool;if(!tool)return;if(tool==='all')compoundSelected=new Set(pickAllNumbers);if(tool==='invert')compoundSelected=new Set(pickAllNumbers.filter(n=>!compoundSelected.has(n)));if(tool==='clear')compoundSelected.clear();if(tool==='import')compoundSelected=new Set(currentPicked());compoundGenerated=[];document.querySelector('#compoundResults').hidden=true;renderCompound()});
+    document.querySelector('#clearCompound').onclick=()=>{compoundSelected.clear();compoundPickSize=2;compoundGenerated=[];document.querySelector('#compoundResults').hidden=true;renderCompound()};
+    document.querySelector('#generateCompound').onclick=()=>{const total=combinationCount(compoundSelected.size,compoundPickSize);if(!total){showToast('请选择足够的号码');return}if(total>5000){showToast('组合超过5000组，请减少号码');return}compoundGenerated=buildCombinations([...compoundSelected].sort((a,b)=>a-b),compoundPickSize);document.querySelector('#compoundResultTitle').textContent=total>300?`组合明细 · 显示前300组／共${total}组`:`组合明细 · 共${total}组`;document.querySelector('#compoundList').innerHTML=compoundGenerated.slice(0,300).map((c,i)=>`<li><small>${String(i+1).padStart(3,'0')}</small><span>${c.map(n=>String(n).padStart(2,'0')).join('　')}</span></li>`).join('');document.querySelector('#compoundResults').hidden=false};
+    document.querySelector('#copyCompound').onclick=async()=>{const text=compoundGenerated.map(c=>c.map(n=>String(n).padStart(2,'0')).join(' ')).join('\n');try{await navigator.clipboard.writeText(text);showToast('组合明细已复制')}catch(_){showToast('复制失败，请手动记录')}};
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { modal.classList.add('hidden'); utilityModal.classList.add('hidden'); pickOverlay.setAttribute('hidden',''); } });
+    const backtop = document.querySelector('#backtop');
+    window.addEventListener('scroll', () => backtop.classList.toggle('show', scrollY > 500), { passive: true });
+    backtop.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+    loadManagedContent();
+  </script>
+  <style id="centralTextAdsStyle">
+    .central-text-ad-grid{display:grid;grid-template-columns:1fr;gap:1px;margin:-12px 7px 12px;padding:1px;border:1px solid #5a4820;border-top:0;border-radius:0 0 9px 9px;overflow:hidden;background:#3b311d;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+    .central-text-ad-grid a{display:flex;min-height:38px;align-items:center;justify-content:center;padding:8px 7px;background:#0d0d0d;color:#f2cf68;font-size:14px;font-weight:900;line-height:1.4;text-align:center;text-decoration:none;overflow-wrap:anywhere;word-break:break-word}
+    .central-text-ad-grid a:active{background:#211b0d}
+    @media(max-width:650px){.central-text-ad-grid{margin:-12px 7px 10px}.central-text-ad-grid a{min-height:36px;padding:7px 4px;font-size:13px}}
+  </style>
+  <script id="centralTextAdsSync">
+  (()=>{
+    const CENTRAL='https://123-liuhe-site.xcx8088.workers.dev',lotteries={澳门:{short:'澳门',full:'澳门六合彩',draw:5},香港:{short:'香港',full:'香港六合彩',draw:6},疯狂天天彩:{short:'天天',full:'疯狂天天六合彩',draw:11}};
+    let centralPayload=null,lastSignature='';
+    const activeInfo=()=>lotteries[document.querySelector('.tab-btn.active')?.dataset.lottery||'澳门']||lotteries.澳门;
+    const fill=(value,info,period)=>String(value||'').replaceAll('{期数}',period).replaceAll('{彩种简称}',info.short).replaceAll('{彩种}',info.full);
+    async function nextPeriod(info){
+      const payload=await fetch(`draw-data.php?lottery=${info.draw}&t=${Date.now()}`,{cache:'no-store'}).then(response=>response.json()),data=payload?.data||{};
+      const raw=String(data.nextLotteryIssueNo||data.nextIssueNo||data.nextLotteryNumber||data.nextIntLotteryNumber||'').replace(/\D/g,'');
+      return raw?String(Number(raw.slice(-3))):'';
+    }
+    async function syncTextAds(){
+      try{
+        const info=activeInfo();
+        if(!centralPayload)centralPayload=await fetch(CENTRAL+'/api/public/text-ads',{cache:'no-store'}).then(response=>response.json());
+        const texts=Array.isArray(centralPayload?.data)?centralPayload.data:Array.isArray(centralPayload?.texts)?centralPayload.texts:[],domains=Array.isArray(centralPayload?.domains)?centralPayload.domains:[];
+        if(!texts.length)return;
+        const period=await nextPeriod(info),anchors=[...document.querySelectorAll('.image-ad')].filter(node=>!node.hidden&&node.offsetParent!==null),signature=info.short+'-'+period+'-'+anchors.length;
+        if(signature===lastSignature&&document.querySelector('.central-text-ad-grid'))return;
+        lastSignature=signature;document.querySelectorAll('.central-text-ad-grid').forEach(node=>node.remove());
+        anchors.forEach((anchor,sectionIndex)=>{
+          const grid=document.createElement('div');grid.className='central-text-ad-grid';grid.setAttribute('aria-label','文字广告');
+          for(let offset=0;offset<10;offset++){
+            const item=texts[(sectionIndex*10+offset)%texts.length],domain=domains.length?domains[(sectionIndex*10+offset)%domains.length]:null,link=document.createElement('a'),href=domain?.domain_url?fill(domain.domain_url,info,period):'#';
+            link.textContent=fill(item.ad_text,info,period);link.style.color=item.text_color||'#f2cf68';link.href=href;
+            if(href!=='#'){link.target='_blank';link.rel='noopener noreferrer'}else link.addEventListener('click',event=>event.preventDefault());grid.appendChild(link);
+          }
+          anchor.insertAdjacentElement('afterend',grid);
+        });
+      }catch(error){console.error('central text ads sync',error)}
+    }
+    window.syncCentralTextAds=syncTextAds;
+    document.querySelectorAll('.tab-btn').forEach(button=>button.addEventListener('click',()=>setTimeout(syncTextAds,700)));
+    setTimeout(syncTextAds,1200);setTimeout(syncTextAds,3500);setInterval(syncTextAds,30000);
+  })();
+  </script>
+  <script src="site-stats.js"></script>
+  <script src="cnzz-stats.js"></script>
+</body>
+</html>

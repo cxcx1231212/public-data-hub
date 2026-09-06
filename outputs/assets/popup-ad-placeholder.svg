@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="760" viewBox="0 0 600 760">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#090909"/>
+      <stop offset=".52" stop-color="#241608"/>
+      <stop offset="1" stop-color="#080808"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#8d5d1d"/>
+      <stop offset=".5" stop-color="#f3d583"/>
+      <stop offset="1" stop-color="#8d5d1d"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#d99b36" stop-opacity=".23"/>
+      <stop offset="1" stop-color="#d99b36" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="760" fill="url(#bg)"/>
+  <circle cx="300" cy="290" r="260" fill="url(#glow)"/>
+  <rect x="18" y="18" width="564" height="724" rx="24" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <rect x="34" y="34" width="532" height="692" rx="18" fill="none" stroke="#74501f"/>
+  <path d="M90 176h420M90 570h420" stroke="url(#gold)" stroke-width="2"/>
+  <text x="300" y="128" fill="#a17c40" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="20" font-weight="700" text-anchor="middle" letter-spacing="7">123MH.COM</text>
+  <text x="300" y="318" fill="#f3d583" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="54" font-weight="900" text-anchor="middle">弹窗图片广告</text>
+  <text x="300" y="382" fill="#c4a76c" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="26" font-weight="700" text-anchor="middle">请在后台上传竖版图片</text>
+  <rect x="142" y="437" width="316" height="62" rx="31" fill="#b8842e"/>
+  <text x="300" y="477" fill="#171005" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="25" font-weight="900" text-anchor="middle">建议尺寸 600 × 760</text>
+  <text x="300" y="642" fill="#756347" font-family="Arial,'Microsoft YaHei',sans-serif" font-size="18" text-anchor="middle">上传后这里完整显示您的广告图片</text>
+</svg>

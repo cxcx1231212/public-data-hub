@@ -1,0 +1,17 @@
+{
+  "name": "mahuiziliao-encrypted-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:browser": "node scripts/build-browser.mjs",
+    "test": "node --test tests/crypto.test.ts",
+    "build": "pnpm run typecheck && pnpm run test && pnpm run build:browser && wrangler deploy --config wrangler.jsonc --dry-run --keep-vars --outdir dist"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "esbuild": "latest",
+    "typescript": "latest",
+    "wrangler": "4.125.0"
+  }
+}
